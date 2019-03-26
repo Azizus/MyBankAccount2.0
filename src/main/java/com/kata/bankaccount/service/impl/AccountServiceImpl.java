@@ -17,11 +17,11 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public void deposit(int amount) {
-		transactionRepo.deposit(amount);
+		transactionRepo.addDeposit(amount);
 	}
 
 	public void withdraw(int amount) {
-		transactionRepo.withdraw(amount);
+		transactionRepo.addWithdrawal(amount);
 	}
 
 	public void printStatement() {	

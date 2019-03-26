@@ -33,14 +33,14 @@ public class AccountServiceTest {
 	public void should_store_deposit_transaction() {
 		accountServiceImpl.deposit(100);
 		
-		verify(transactionRepo).deposit(100);
+		verify(transactionRepo).addDeposit(100);
 	}
 
 	@Test 
 	public void should_store_withdrawal_transaction() {
 		accountServiceImpl.withdraw(100);
 		
-		verify(transactionRepo).withdraw(100);
+		verify(transactionRepo).addWithdrawal(100);
 	}
 	
 	@Test

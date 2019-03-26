@@ -10,7 +10,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>{
 	
 
 
-	public void deposit(int amount);
-	public void withdraw(int amount);
+	public void addDeposit(int amount);
+	public void addWithdrawal(int amount);
 
 }
