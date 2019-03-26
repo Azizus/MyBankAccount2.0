@@ -20,7 +20,7 @@ public class AccountServiceTest {
 	@Mock TransactionRepository transactionRepo;
 	@Before
 	public void initialize(){
-		accountServiceImpl = new AccountServiceImpl();
+		accountServiceImpl = new AccountServiceImpl(transactionRepo);
 	}
 
 	@Test
