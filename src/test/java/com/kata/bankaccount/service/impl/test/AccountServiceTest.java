@@ -30,4 +30,10 @@ public class AccountServiceTest {
 		verify(transactionRepo).deposit(100);
 	}
 
+	@Test 
+	public void should_store_withdrawal_transaction() {
+		accountServiceImpl.withdraw(100);
+		
+		verify(transactionRepo).withdraw(100);
+	}
 }
