@@ -24,7 +24,8 @@ public class AccountServiceImpl implements AccountService {
 		transactionRepo.withdraw(amount);
 	}
 
-	public void printStatement() {		
+	public void printStatement() {	
+		transactionPrinter.print(transactionRepo.findAll());
 	}
 
 }
