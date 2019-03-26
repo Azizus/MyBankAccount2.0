@@ -16,7 +16,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public void withdraw(int amount) {
-		
+		transactionRepo.withdraw(amount);
 	}
 
 	public void printStatement() {		
