@@ -6,7 +6,10 @@ import java.util.Date;
 public class DateFormat {
 
 	public String formatDateToString(Date date) {
-		return null;
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat df = new SimpleDateFormat(pattern);
+		
+		return df.format(date);
 	}
 	
 }
