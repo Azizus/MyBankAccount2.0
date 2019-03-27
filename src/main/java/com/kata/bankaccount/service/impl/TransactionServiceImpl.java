@@ -21,7 +21,7 @@ public class TransactionServiceImpl {
 	}
 
 	public int getBalanceOfLastTransaction(List<Transaction> transactions) {
-		return 0;
+		return transactions.get(transactions.size() - 1 ).getBalance();
 	}
 	
 	
