@@ -20,6 +20,7 @@ import static org.mockito.BDDMockito.*;
 
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.domain.TransactionType;
+import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.impl.AccountServiceImpl;
 import com.kata.bankaccount.service.impl.TransactionPrinter;
@@ -31,10 +32,9 @@ public class AccountServiceTest {
 	private AccountServiceImpl accountServiceImpl;
 	@Mock TransactionRepository transactionRepo;
 	@Mock TransactionPrinter transactionPrinter;
-	@Mock TransactionServiceImpl transactionServiceImpl;
 	@Before
 	public void initialize(){
-		accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter, transactionServiceImpl);
+		accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter);
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class AccountServiceTest {
 	}
 
 	@Test 
-	public void should_store_withdrawal_transaction() {
+	public void should_store_withdrawal_transaction() throws TransactionException {
 		Date date = new Date();
 		accountServiceImpl.withdraw(TransactionType.WITHDRAWAL, date, 70, 30);
 		
@@ -62,5 +62,14 @@ public class AccountServiceTest {
 		accountServiceImpl.printStatement();
 		
 		verify(transactionPrinter).printLines(transactions);
+	}
+	
+	@Test
+	public void should_return_balance_of_last_transaction() {
+		List<Transaction> transactions = new ArrayList<Transaction>();		
+		Transaction transaction = new Transaction(TransactionType.DEPOSIT, new Date(), 100, 100);
+		transactions.add(transaction);
+		
+		assertThat(accountServiceImpl.getBalanceOfLastTransaction(transactions), is(equalTo(100)));
 	}
 }
