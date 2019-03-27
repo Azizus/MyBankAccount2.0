@@ -1,9 +1,9 @@
-package com.kata.bankaccount.service.impl.test;
+package com.kata.bankaccount.test;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.BDDMockito.*;
 
 import com.kata.bankaccount.domain.Transaction;
+import com.kata.bankaccount.domain.TransactionType;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.impl.AccountServiceImpl;
 import com.kata.bankaccount.service.impl.TransactionPrinter;
@@ -31,16 +32,18 @@ public class AccountServiceTest {
 
 	@Test
 	public void should_store_deposit_transaction() {
-		accountServiceImpl.deposit(100);
+		Date date = new Date();
+		accountServiceImpl.deposit(100, date, TransactionType.DEPOSIT, 100);
 		
-		verify(transactionRepo).addDeposit(100);
+		verify(transactionRepo).addDeposit(100, date, TransactionType.DEPOSIT, 100);
 	}
 
 	@Test 
 	public void should_store_withdrawal_transaction() {
-		accountServiceImpl.withdraw(100);
+		Date date = new Date();
+		accountServiceImpl.withdraw(70, date, TransactionType.DEPOSIT, 30);
 		
-		verify(transactionRepo).addWithdrawal(100);
+		verify(transactionRepo).addWithdrawal(70, date, TransactionType.DEPOSIT, 30);
 	}
 	
 	@Test
@@ -51,6 +54,6 @@ public class AccountServiceTest {
 		
 		accountServiceImpl.printStatement();
 		
-		verify(transactionPrinter).print(transactions);
+		verify(transactionPrinter).printLines(transactions);
 	}
 }

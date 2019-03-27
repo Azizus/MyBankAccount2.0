@@ -1,7 +1,10 @@
 package com.kata.bankaccount.service.impl;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 
+import com.kata.bankaccount.domain.TransactionType;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.AccountService;
 
@@ -16,16 +19,16 @@ public class AccountServiceImpl implements AccountService {
 		this.transactionPrinter = transactionPrinter;
 	}
 
-	public void deposit(int amount) {
-		transactionRepo.addDeposit(amount);
+	public void deposit(int amount, Date date, TransactionType type, int balance) {
+		transactionRepo.addDeposit(amount, new Date(), type, balance);
 	}
 
-	public void withdraw(int amount) {
-		transactionRepo.addWithdrawal(amount);
+	public void withdraw(int amount, Date date, TransactionType type, int balance) {
+		transactionRepo.addWithdrawal(amount, new Date(), type, balance);
 	}
 
 	public void printStatement() {	
-		transactionPrinter.print(transactionRepo.findAll());
+		transactionPrinter.printLines(transactionRepo.findAll());
 	}
 
 }
