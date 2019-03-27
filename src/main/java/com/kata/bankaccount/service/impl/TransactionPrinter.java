@@ -35,7 +35,7 @@ public class TransactionPrinter {
 				
 	}
 	
-	public String printLine(Transaction transaction) {
+	private String printLine(Transaction transaction) {
 		String output = transaction.getType()
 				+ " "
 				+"||"
