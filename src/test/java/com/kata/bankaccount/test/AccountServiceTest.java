@@ -32,25 +32,28 @@ public class AccountServiceTest {
 	private AccountServiceImpl accountServiceImpl;
 	@Mock TransactionRepository transactionRepo;
 	@Mock TransactionPrinter transactionPrinter;
+	@Mock TransactionServiceImpl transactionServiceImpl;
 	@Before
 	public void initialize(){
-		accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter);
+		accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter,transactionServiceImpl );
 	}
 
 	@Test
 	public void should_store_deposit_transaction() {
+
 		Date date = new Date();
 		accountServiceImpl.deposit(TransactionType.DEPOSIT, date, 100, 100);
 		
-		verify(transactionRepo).addDeposit(TransactionType.DEPOSIT, date, 100, 100);
+		verify(transactionRepo).addDeposit(TransactionType.DEPOSIT, date , 100, 100);
 	}
 
 	@Test 
-	public void should_store_withdrawal_transaction() throws TransactionException {
+	public void should_store_withdrawal_transaction(){
 		Date date = new Date();
+				
 		accountServiceImpl.withdraw(TransactionType.WITHDRAWAL, date, 70, 30);
 		
-		verify(transactionRepo).addWithdrawal(TransactionType.WITHDRAWAL, date, 70, 30);
+		verify(transactionRepo).addWithdrawal(TransactionType.WITHDRAWAL,date , 70, 30);
 	}
 	
 	@Test
@@ -64,12 +67,4 @@ public class AccountServiceTest {
 		verify(transactionPrinter).printLines(transactions);
 	}
 	
-	@Test
-	public void should_return_balance_of_last_transaction() {
-		List<Transaction> transactions = new ArrayList<Transaction>();		
-		Transaction transaction = new Transaction(TransactionType.DEPOSIT, new Date(), 100, 100);
-		transactions.add(transaction);
-		
-		assertThat(accountServiceImpl.getBalanceOfLastTransaction(transactions), is(equalTo(100)));
-	}
 }

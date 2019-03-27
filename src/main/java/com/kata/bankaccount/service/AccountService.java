@@ -12,7 +12,7 @@ public interface AccountService {
 	
 	public void deposit(TransactionType type, Date date, int amount, int balance);
 	
-	public void withdraw(TransactionType type, Date date, int amount, int balance) throws TransactionException;
+	public void withdraw(TransactionType type, Date date, int amount, int balance);
 	
 	public void printStatement();
 
