@@ -65,12 +65,12 @@ public class Transaction {
 	public void setType(TransactionType type) {
 		this.type = type;
 	}
-	public Transaction(Date date, int amount, int balance, TransactionType type) {
+	public Transaction(TransactionType type, Date date, int amount, int balance) {
 		super();
+		this.type = type;
 		this.date = date;
 		this.amount = amount;
 		this.balance = balance;
-		this.type = type;
 	}
 
 	

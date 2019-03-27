@@ -24,6 +24,9 @@ public class TransactionServiceImpl {
 		return transactions.get(transactions.size() - 1 ).getBalance();
 	}
 	
+	public int updateBalance(int balance, int lastBalance) {
+		return balance + lastBalance;
+	}
 	
 
 }

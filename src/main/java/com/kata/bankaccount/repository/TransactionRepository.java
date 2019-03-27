@@ -11,8 +11,8 @@ import com.kata.bankaccount.domain.TransactionType;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>{
 	
-	public void addDeposit(int amount, Date date, TransactionType type, int balance);
+	public void addDeposit(TransactionType type, Date date, int amount, int balance);
 	
-	public void addWithdrawal(int amount, Date date, TransactionType type, int balance);
+	public void addWithdrawal(TransactionType type, Date date, int amount, int balance);
 
 }

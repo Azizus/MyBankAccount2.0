@@ -27,7 +27,6 @@ import com.kata.bankaccount.service.impl.TransactionServiceImpl;
 public class TransactionServiceTest {
 
 	private TransactionServiceImpl transactionServiceImpl;
-	private TransactionRepository tr;
 	@Mock TransactionRepository transactionRepo;
 	@Mock AccountServiceImpl accountServiceImpl;
 	
@@ -46,9 +45,10 @@ public class TransactionServiceTest {
 	@Test
 	public void should_return_balance_of_last_transaction() {
 		List<Transaction> transactions = new ArrayList<Transaction>();		
-		Transaction transaction = new Transaction(new Date(), 100, 100, TransactionType.DEPOSIT);
+		Transaction transaction = new Transaction(TransactionType.DEPOSIT, new Date(), 100, 100);
 		transactions.add(transaction);
 		
 		assertThat(transactionServiceImpl.getBalanceOfLastTransaction(transactions), is(equalTo(100)));
 	}
+	
 }

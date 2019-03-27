@@ -13,18 +13,21 @@ public class AccountServiceImpl implements AccountService {
 
 	private TransactionRepository transactionRepo;
 	private TransactionPrinter transactionPrinter;
+	private TransactionServiceImpl transactionServiceImpl;
 	
-	public AccountServiceImpl(TransactionRepository transactionRepo, TransactionPrinter transactionPrinter) {
+	public AccountServiceImpl(TransactionRepository transactionRepo, TransactionPrinter transactionPrinter, TransactionServiceImpl transactionServiceImpl) {
 		this.transactionRepo = transactionRepo;
 		this.transactionPrinter = transactionPrinter;
+		this.transactionServiceImpl = transactionServiceImpl;
 	}
 
-	public void deposit(int amount, Date date, TransactionType type, int balance) {
-		transactionRepo.addDeposit(amount, new Date(), type, balance);
+	public void deposit(TransactionType type, Date date, int amount, int balance) {
+		//balance = balance + transactionServiceImpl.getBalanceOfLastTransaction(transactionRepo.findAll());
+		transactionRepo.addDeposit(type, new Date(), amount, balance);
 	}
 
-	public void withdraw(int amount, Date date, TransactionType type, int balance) {
-		transactionRepo.addWithdrawal(amount, new Date(), type, balance);
+	public void withdraw(TransactionType type, Date date, int amount, int balance) {
+		transactionRepo.addWithdrawal(type, new Date(), amount, balance);
 	}
 
 	public void printStatement() {	
