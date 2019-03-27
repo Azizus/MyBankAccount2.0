@@ -19,6 +19,10 @@ public class TransactionServiceImpl {
 	public List<Transaction> allTransactions() {
 		return transactionRepo.findAll();
 	}
+
+	public int getBalanceOfLastTransaction(List<Transaction> transactions) {
+		return 0;
+	}
 	
 	
 
