@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -19,6 +21,7 @@ import static org.mockito.BDDMockito.*;
 
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.domain.TransactionType;
+import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.impl.AccountServiceImpl;
 import com.kata.bankaccount.service.impl.TransactionServiceImpl;
@@ -29,6 +32,10 @@ public class TransactionServiceTest {
 	private TransactionServiceImpl transactionServiceImpl;
 	@Mock TransactionRepository transactionRepo;
 	@Mock AccountServiceImpl accountServiceImpl;
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+
 	
 	@Before
 	public void initialize(){
@@ -49,6 +56,13 @@ public class TransactionServiceTest {
 		transactions.add(transaction);
 		
 		assertThat(transactionServiceImpl.getBalanceOfLastTransaction(transactions), is(equalTo(100)));
+	}
+	
+	@Test
+	public void should_throw_exception_when_insufficient_funds() throws TransactionException {
+		thrown.expect(TransactionException.class);
+		thrown.expectMessage("Solde insuffisant!");
+		transactionServiceImpl.compare(10, 20);
 	}
 	
 }

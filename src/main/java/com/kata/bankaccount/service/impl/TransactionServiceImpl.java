@@ -27,6 +27,8 @@ public class TransactionServiceImpl {
 	public int updateBalance(int balance, int lastBalance) {
 		return balance + lastBalance;
 	}
+
+	public void compare(int balance, int amount) {}
 	
 
 }
