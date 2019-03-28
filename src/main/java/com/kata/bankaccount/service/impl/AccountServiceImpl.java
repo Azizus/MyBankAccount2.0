@@ -51,8 +51,13 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account findByAccountId(long accountId) throws AccountException {
-	return null;
-	}
+		Account account = accountRepo.findByAccountId(accountId);
+		if (account !=null) {
+			return account;
+		}
+		else {
+			throw new AccountException("Compte non trouvé!");
+		}	}
 	
 
 }
