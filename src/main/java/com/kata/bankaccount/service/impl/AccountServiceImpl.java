@@ -29,14 +29,14 @@ public class AccountServiceImpl implements AccountService {
 		 this.updateAccountBalance(transactionRepo.save(transaction));
 	}
 	
+	public void withdraw(Transaction transaction) {
+		this.updateAccountBalance(transactionRepo.save(transaction));
+	}
+	
 	private void updateAccountBalance(Transaction transaction) {
 		Account account = accountRepo.findByAccountId(transaction.getAccountId());
 		account.setBalance(transaction.getBalance());
 		accountRepo.save(account);	
-	}
-
-	public void withdraw(TransactionType type, Date date, int amount, int balance) {
-		transactionRepo.addWithdrawal(type, new Date(), amount, balance);
 	}
 
 	public void printStatement() {	

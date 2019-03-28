@@ -59,11 +59,19 @@ public class AccountServiceTest {
 
 	@Test 
 	public void should_store_withdrawal_transaction(){
+		int amount = -70;
+		Account account = new Account(1, 100);
 		Date date = new Date();
+
+		Transaction transaction = new Transaction(TransactionType.WITHDRAWAL, date, amount, account.getBalance() + amount);
+
+		when(transactionRepo.save(transaction)).thenReturn(transaction);
+		when(accountRepo.findByAccountId(transaction.getAccountId())).thenReturn(account);
 				
-		accountServiceImpl.withdraw(TransactionType.WITHDRAWAL, date, 70, 30);
-		
-		verify(transactionRepo).addWithdrawal(TransactionType.WITHDRAWAL,date , 70, 30);
+		accountServiceImpl.deposit(transaction);
+				
+		verify(accountRepo).save(account);
+				
 	}
 	
 	@Test
