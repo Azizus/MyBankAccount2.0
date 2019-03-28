@@ -1,4 +1,4 @@
-package com.kata.bankaccount.test;
+package com.kata.bankaccount.ServiceImpl;
 
 import static org.mockito.Mockito.verify;
 
@@ -18,9 +18,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.*;
 
+import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.domain.TransactionType;
 import com.kata.bankaccount.exceptions.TransactionException;
+import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.impl.AccountServiceImpl;
 import com.kata.bankaccount.service.impl.TransactionPrinter;
@@ -32,19 +34,27 @@ public class AccountServiceTest {
 	private AccountServiceImpl accountServiceImpl;
 	@Mock TransactionRepository transactionRepo;
 	@Mock TransactionPrinter transactionPrinter;
-	@Mock TransactionServiceImpl transactionServiceImpl;
+	@Mock AccountRepository accountRepo;
 	@Before
 	public void initialize(){
-		accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter,transactionServiceImpl );
+		accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter, accountRepo );
 	}
 
+	
 	@Test
-	public void should_store_deposit_transaction() {
-
+	public void should_deposit_money_in_account() {
+		int amount = 100;
+		Account account = new Account(1, 0);
 		Date date = new Date();
-		accountServiceImpl.deposit(TransactionType.DEPOSIT, date, 100, 100);
-		
-		verify(transactionRepo).addDeposit(TransactionType.DEPOSIT, date , 100, 100);
+
+		Transaction transaction = new Transaction(TransactionType.DEPOSIT, date, amount, account.getBalance() + amount);
+
+		when(transactionRepo.save(transaction)).thenReturn(transaction);
+		when(accountRepo.findByAccountId(transaction.getAccountId())).thenReturn(account);
+				
+		accountServiceImpl.deposit(transaction);
+				
+		verify(accountRepo).save(account);
 	}
 
 	@Test 

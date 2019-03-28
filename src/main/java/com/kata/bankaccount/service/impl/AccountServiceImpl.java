@@ -1,13 +1,14 @@
 package com.kata.bankaccount.service.impl;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.domain.TransactionType;
 import com.kata.bankaccount.exceptions.TransactionException;
+import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.AccountService;
 
@@ -16,17 +17,22 @@ public class AccountServiceImpl implements AccountService {
 
 	private TransactionRepository transactionRepo;
 	private TransactionPrinter transactionPrinter;
-	private TransactionServiceImpl transactionServiceImpl;
-	
+	private AccountRepository accountRepo;
 
-	public AccountServiceImpl(TransactionRepository transactionRepo, TransactionPrinter transactionPrinter, TransactionServiceImpl transactionServiceImpl) {
+	public AccountServiceImpl(TransactionRepository transactionRepo, TransactionPrinter transactionPrinter, AccountRepository accountRepo) {
 		this.transactionRepo = transactionRepo;
 		this.transactionPrinter = transactionPrinter;
-		this.transactionServiceImpl = transactionServiceImpl;
+		this.accountRepo = accountRepo;
 	}
 
-	public void deposit(TransactionType type, Date date, int amount, int balance) {
-		transactionRepo.addDeposit(type, new Date(), amount, balance);
+	public void deposit(Transaction transaction) {
+		 this.updateAccountBalance(transactionRepo.save(transaction));
+	}
+	
+	private void updateAccountBalance(Transaction transaction) {
+		Account account = accountRepo.findByAccountId(transaction.getAccountId());
+		account.setBalance(transaction.getBalance());
+		accountRepo.save(account);	
 	}
 
 	public void withdraw(TransactionType type, Date date, int amount, int balance) {
@@ -43,6 +49,7 @@ public class AccountServiceImpl implements AccountService {
 		} else
 			throw new TransactionException("Solde insuffisant!");
 	}
+	
 	
 
 }

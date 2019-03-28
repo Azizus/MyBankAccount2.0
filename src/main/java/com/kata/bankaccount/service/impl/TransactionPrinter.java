@@ -1,9 +1,15 @@
 package com.kata.bankaccount.service.impl;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.text.DateFormatter;
+
 import org.springframework.stereotype.Service;
 
 import com.kata.bankaccount.domain.Transaction;
@@ -14,11 +20,9 @@ import com.kata.bankaccount.utils.Printer;
 public class TransactionPrinter {
 
 	private Printer printer;
-	private DateFormat dateFormat;
 	
-	public TransactionPrinter(Printer printer, DateFormat dateFormat) {
+	public TransactionPrinter(Printer printer) {
 		this.printer = printer;
-		this.dateFormat = dateFormat;
 	}
 	
 	public static final String header = "OPERATION || DATE || AMOUNT || BALANCE";
@@ -36,11 +40,12 @@ public class TransactionPrinter {
 	}
 	
 	private String printLine(Transaction transaction) {
+		LocalDate date = transaction.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		String output = transaction.getType()
 				+ " "
 				+"||"
 				+ " "
-				+ dateFormat.formatDateToString(transaction.getDate())
+				+ date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 				+ " "
 				+"||"
 				+ " "
@@ -48,7 +53,7 @@ public class TransactionPrinter {
 				+ " "
 				+"||"
 				+ " "
-				+transaction.getBalance();	
+				+transaction.getBalance();
 		return output;
 	}
 

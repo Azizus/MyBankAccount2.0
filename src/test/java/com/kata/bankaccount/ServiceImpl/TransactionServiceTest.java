@@ -1,4 +1,4 @@
-package com.kata.bankaccount.test;
+package com.kata.bankaccount.ServiceImpl;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
