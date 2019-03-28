@@ -82,6 +82,22 @@ public class AccountServiceTest {
 				
 	}
 	
+	@Test 
+	public void should_throw_exception_when_balance_unsufficient_to_withdraw() throws TransactionException{
+		int amount = -70;
+		Account account = new Account(1, 50);
+		Date date = new Date();
+
+		Transaction transaction = new Transaction(TransactionType.WITHDRAWAL, date, amount, account.getBalance() + amount);
+
+		
+		thrown.expect(TransactionException.class);
+		thrown.expectMessage("Solde insuffisant!");
+		accountServiceImpl.withdraw(transaction);
+
+				
+	}
+	
 	@Test
 	public void should_print_statement() {
 		List<Transaction> transactions = Arrays.asList(new Transaction());
