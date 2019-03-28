@@ -28,5 +28,5 @@ Ensuite il suffit d'indiquer le compte duquel on veut imprimer l'historique des 
 
 
 ## Run 
-git clone [https://github.com/Azizus/MyBankAccount2.0.git]
-mvn test
+```git clone [https://github.com/Azizus/MyBankAccount2.0.git]
+mvn test```
