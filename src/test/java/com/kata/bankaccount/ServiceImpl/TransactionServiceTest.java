@@ -49,12 +49,4 @@ public class TransactionServiceTest {
 		verify(transactionRepo).findAll();
 	}
 	
-	@Test
-	public void should_return_balance_of_last_transaction() {
-		List<Transaction> transactions = new ArrayList<Transaction>();		
-		Transaction transaction = new Transaction(TransactionType.DEPOSIT, new Date(), 100, 100);
-		transactions.add(transaction);
-		
-		assertThat(transactionServiceImpl.getBalanceOfLastTransaction(transactions), is(equalTo(100)));
-	}
 }

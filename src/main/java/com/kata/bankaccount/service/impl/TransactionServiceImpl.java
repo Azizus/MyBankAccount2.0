@@ -20,12 +20,4 @@ public class TransactionServiceImpl {
 		return transactionRepo.findAll();
 	}
 	
-	private int updateBalance(int balance, int lastBalance) {
-		return balance + lastBalance;
-	}	
-	
-	public int getBalanceOfLastTransaction(List<Transaction> transactions) {
-		return transactions.get(transactions.size() - 1 ).getBalance();
-	}
-
 }

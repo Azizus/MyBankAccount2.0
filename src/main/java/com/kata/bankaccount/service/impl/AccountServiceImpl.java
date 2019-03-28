@@ -28,7 +28,8 @@ public class AccountServiceImpl implements AccountService {
 		 this.updateAccountBalance(transactionRepo.save(transaction));
 	}
 	
-	public void withdraw(Transaction transaction) {
+	public void withdraw(Transaction transaction) throws TransactionException {
+		if (this.compare(transaction.getBalance()))
 		this.updateAccountBalance(transactionRepo.save(transaction));
 	}
 	
@@ -42,8 +43,8 @@ public class AccountServiceImpl implements AccountService {
 		transactionPrinter.printLines(transactionRepo.findAll());
 	}
 	
-	public boolean compare(int balance, int amount) throws TransactionException {
-		if (balance >= amount) {
+	private boolean compare(int balanceAfter) throws TransactionException {
+		if (balanceAfter >= 0) {
 			return true;
 		} else
 			throw new TransactionException("Solde insuffisant!");

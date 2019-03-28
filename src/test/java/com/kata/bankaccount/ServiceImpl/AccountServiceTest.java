@@ -66,7 +66,7 @@ public class AccountServiceTest {
 	}
 
 	@Test 
-	public void should_store_withdrawal_transaction(){
+	public void should_store_withdrawal_transaction_when_balance_is_sufficient(){
 		int amount = -70;
 		Account account = new Account(1, 100);
 		Date date = new Date();
