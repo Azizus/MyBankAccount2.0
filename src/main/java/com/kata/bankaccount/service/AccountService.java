@@ -1,11 +1,12 @@
 package com.kata.bankaccount.service;
 
-import java.util.Date;
+
+import javax.security.auth.login.AccountException;
 
 import org.springframework.stereotype.Service;
 
+import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.domain.Transaction;
-import com.kata.bankaccount.domain.TransactionType;
 
 @Service
 public interface AccountService {
@@ -15,5 +16,7 @@ public interface AccountService {
 	public void withdraw(Transaction transaction);
 	
 	public void printStatement();
+	
+	public Account findByAccountId(long accountId) throws AccountException;
 
 }

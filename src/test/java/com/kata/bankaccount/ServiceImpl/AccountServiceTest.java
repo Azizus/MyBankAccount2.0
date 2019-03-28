@@ -7,8 +7,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.security.auth.login.AccountException;
+
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -35,6 +39,10 @@ public class AccountServiceTest {
 	@Mock TransactionRepository transactionRepo;
 	@Mock TransactionPrinter transactionPrinter;
 	@Mock AccountRepository accountRepo;
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();	
+	
 	@Before
 	public void initialize(){
 		accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter, accountRepo );
@@ -84,5 +92,14 @@ public class AccountServiceTest {
 		
 		verify(transactionPrinter).printLines(transactions);
 	}
+	
+	@Test
+	public void should_thow_exception_when_account_not_found() throws AccountException {
+		Account account = new Account();
+		thrown.expect(AccountException.class);
+			thrown.expectMessage("Compte non trouvé!");
+			accountServiceImpl.findByAccountId(account.getAccountId());
+		}
+	
 	
 }

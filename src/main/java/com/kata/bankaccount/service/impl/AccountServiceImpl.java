@@ -1,12 +1,11 @@
 package com.kata.bankaccount.service.impl;
 
-import java.util.Date;
+import javax.security.auth.login.AccountException;
 
 import org.springframework.stereotype.Service;
 
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.domain.Transaction;
-import com.kata.bankaccount.domain.TransactionType;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.repository.TransactionRepository;
@@ -49,7 +48,11 @@ public class AccountServiceImpl implements AccountService {
 		} else
 			throw new TransactionException("Solde insuffisant!");
 	}
-	
+
+	@Override
+	public Account findByAccountId(long accountId) throws AccountException {
+	return null;
+	}
 	
 
 }
