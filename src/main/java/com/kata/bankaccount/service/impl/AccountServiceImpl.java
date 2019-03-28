@@ -39,8 +39,8 @@ public class AccountServiceImpl implements AccountService {
 		accountRepo.save(account);	
 	}
 
-	public void printStatement() {	
-		transactionPrinter.printLines(transactionRepo.findAll());
+	public void printStatement(long accountId) {	
+		transactionPrinter.printLines(transactionRepo.findAllByAccountId(accountId));
 	}
 	
 	private boolean compare(int balanceAfter) throws TransactionException {

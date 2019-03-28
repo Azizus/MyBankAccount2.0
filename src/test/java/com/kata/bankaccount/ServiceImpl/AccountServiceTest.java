@@ -66,7 +66,7 @@ public class AccountServiceTest {
 	}
 
 	@Test 
-	public void should_store_withdrawal_transaction_when_balance_is_sufficient(){
+	public void should_withdraw_money_when_balance_is_sufficient(){
 		int amount = -70;
 		Account account = new Account(1, 100);
 		Date date = new Date();
@@ -100,11 +100,12 @@ public class AccountServiceTest {
 	
 	@Test
 	public void should_print_statement() {
+		Account account = new Account(1, 0);
 		List<Transaction> transactions = Arrays.asList(new Transaction());
 		
-		given(transactionRepo.findAll()).willReturn(transactions);
+		given(transactionRepo.findAllByAccountId(account.getAccountId())).willReturn(transactions);
 		
-		accountServiceImpl.printStatement();
+		accountServiceImpl.printStatement(account.getAccountId());
 		
 		verify(transactionPrinter).printLines(transactions);
 	}
