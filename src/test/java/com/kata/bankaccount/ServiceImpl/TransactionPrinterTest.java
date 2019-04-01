@@ -34,17 +34,19 @@ public class TransactionPrinterTest {
   @Test
   public void should_print_transactions_with_header() {
 
-    Account account = new Account(1, 0);
+    long accountId = 1;
+    int balance = 0;
     int depositAmount = 100;
     int withdrawAmount = -70;
+    LocalDate localDate = LocalDate.of(2019, 03, 27);
     Date date = new GregorianCalendar(2019, Calendar.MARCH, 27).getTime();
 
-    LocalDate localDate = LocalDate.of(2019, 03, 27);
+    Account account = Account.builder().accountId(accountId).balance(balance).build();
     List<Transaction> transactions = new ArrayList<Transaction>();
-    transactions.add(
-        new Transaction(account.getAccountId(), date, depositAmount, 100, TransactionType.DEPOSIT));
-    transactions.add(new Transaction(account.getAccountId(), date, withdrawAmount, 30,
-        TransactionType.WITHDRAWAL));
+    transactions.add(Transaction.builder().accountId(accountId).date(date).amount(depositAmount)
+        .balance(account.getBalance()).type(TransactionType.DEPOSIT).build());
+    transactions.add(Transaction.builder().accountId(accountId).date(date).amount(withdrawAmount)
+        .balance(account.getBalance()).type(TransactionType.WITHDRAWAL).build());
 
 
     transactionPrinter.printLines(transactions);

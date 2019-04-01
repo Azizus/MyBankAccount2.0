@@ -28,7 +28,6 @@ public class TransactionPrinter {
         .collect(Collectors.toCollection(LinkedList::new)).iterator()
         .forEachRemaining(printer::print);
 
-
   }
 
   private String printLine(Transaction transaction) {

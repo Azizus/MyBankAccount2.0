@@ -45,7 +45,7 @@ public class AccountServiceTest {
     int amount = 100;
     long accountId = 1;
     int balance = 0;
-    Account account = new Account(accountId, balance);
+    Account account = Account.builder().accountId(accountId).balance(balance).build();
 
     when(accountRepo.findByAccountId(account.getAccountId())).thenReturn(account);
 
@@ -60,7 +60,8 @@ public class AccountServiceTest {
       throws TransactionException, AccountException {
     int amount = -70;
     long accountId = 2;
-    Account account = new Account(2, 100);
+    int balance = 30;
+    Account account = Account.builder().accountId(accountId).balance(balance).build();
 
     when(accountRepo.findByAccountId(account.getAccountId())).thenReturn(account);
 
@@ -74,7 +75,10 @@ public class AccountServiceTest {
   public void should_throw_exception_when_balance_unsufficient_to_withdraw()
       throws TransactionException, AccountException {
     int amount = 70;
-    Account account = new Account(1, 50);
+    long accountId = 1;
+    int balance = 50;
+    Account account = Account.builder().accountId(accountId).balance(balance).build();
+
     given(accountRepo.findByAccountId(account.getAccountId())).willReturn(account);
 
     thrown.expect(TransactionException.class);
@@ -92,7 +96,9 @@ public class AccountServiceTest {
 
   @Test
   public void should_print_statement() {
-    Account account = new Account(1, 0);
+    long accountId = 1;
+    int balance = 0;
+    Account account = Account.builder().accountId(accountId).balance(balance).build();
     List<Transaction> transactions = Arrays.asList(new Transaction());
 
     given(transactionRepo.findAllByAccountId(account.getAccountId())).willReturn(transactions);

@@ -53,9 +53,11 @@ public class TransactionServiceTest {
     long accountId = 1;
     int balance = 100;
     int amount = 100;
-    Account account = new Account(accountId, balance);
-    Transaction transaction =
-        new Transaction(1, new Date(), amount, balance, TransactionType.DEPOSIT);
+    Date date = new Date();
+
+    Account account = Account.builder().accountId(accountId).balance(balance).build();
+    Transaction transaction = Transaction.builder().accountId(accountId).date(date).amount(amount)
+        .balance(balance).type(TransactionType.DEPOSIT).build();
 
     when(accountServiceImpl.depositInAccount(accountId, amount)).thenReturn(account);
 
@@ -73,10 +75,11 @@ public class TransactionServiceTest {
     long accountId = 2;
     int balance = 30;
     int amount = -70;
-    Account account = new Account(accountId, balance);
+    Date date = new Date();
+    Account account = Account.builder().accountId(accountId).balance(balance).build();
 
-    Transaction transaction =
-        new Transaction(1, new Date(), amount, balance, TransactionType.DEPOSIT);
+    Transaction transaction = Transaction.builder().accountId(accountId).date(date).amount(amount)
+        .balance(balance).type(TransactionType.WITHDRAWAL).build();
 
     when(accountServiceImpl.withdrawFromAccount(accountId, amount)).thenReturn(account);
 

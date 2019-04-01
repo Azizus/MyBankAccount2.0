@@ -8,13 +8,15 @@ import com.kata.bankaccount.domain.TransactionType;
 public class TransactionFactory {
 
   public Transaction instansiateDepositTransaction(Account account, int amount) {
-    return new Transaction(account.getAccountId(), new Date(), amount, account.getBalance(),
-        TransactionType.DEPOSIT);
+    return Transaction.builder().accountId(account.getAccountId()).date(new Date()).amount(amount)
+        .balance(account.getBalance()).type(TransactionType.DEPOSIT).build();
+
   }
 
   public Transaction instansiateWithdrawalTransaction(Account account, int amount) {
-    return new Transaction(account.getAccountId(), new Date(), amount, account.getBalance(),
-        TransactionType.WITHDRAWAL);
+    return Transaction.builder().accountId(account.getAccountId()).date(new Date()).amount(amount)
+        .balance(account.getBalance()).type(TransactionType.WITHDRAWAL).build();
+
   }
 
 }
