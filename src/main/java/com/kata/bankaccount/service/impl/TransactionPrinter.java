@@ -33,11 +33,13 @@ public class TransactionPrinter {
 
   private String printLine(Transaction transaction) {
     LocalDate date = transaction.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    StringBuilder sb = new StringBuilder();
+    sb.append(transaction.getType()).append(" ").append("||").append(" ")
+        .append(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append(" ").append("||")
+        .append(" ").append(transaction.getAmount()).append(" ").append("||").append(" ")
+        .append(transaction.getBalance());
 
-    String output = transaction.getType() + " " + "||" + " "
-        + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " " + "||" + " "
-        + transaction.getAmount() + " " + "||" + " " + transaction.getBalance();
-    return output;
+    return sb.toString();
   }
 
 }
