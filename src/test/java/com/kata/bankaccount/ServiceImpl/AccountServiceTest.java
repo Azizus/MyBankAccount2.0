@@ -102,6 +102,4 @@ public class AccountServiceTest {
     verify(transactionPrinter).printLines(transactions);
   }
 
-
-
 }
