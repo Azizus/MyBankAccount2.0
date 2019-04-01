@@ -23,7 +23,6 @@ import com.kata.bankaccount.service.impl.TransactionServiceImpl;
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
 
-
   private TransactionServiceImpl transactionServiceImpl;
   @Mock
   TransactionRepository transactionRepo;
