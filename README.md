@@ -22,9 +22,13 @@ In order to check my operations As a bank client I want to see the history (oper
 ## Implementation
 Pour la réalisation de ce projet nous avons décider d'utiliser le framework Spring avec l'ORM JPA pour la persistance des données.
 Nous allons créer deux classe persistantes : ACCOUNT et TRANSACTION
+Lors des operations, le montant et le type de la transaction ainsi que le compté concerné doivent etre connu. Ceci permettra a l'application de vérifier le solde existant en cas de retrait et d'informer l'utilisateur en cas d'incapacité de retrait pour solde insuffisant.
+Ensuite il suffit d'indiquer le compte duquel on veut imprimer l'historique des transactions.
 
 
 
 ## Run 
-git clone : cloner le projet depuis l'url https://github.com/Azizus/MyBankAccount.git
-mvn install
+```
+git clone https://github.com/Azizus/MyBankAccount2.0.git
+mvn test
+```
