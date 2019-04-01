@@ -1,78 +1,80 @@
 package com.kata.bankaccount.domain;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 public class Transaction {
-	@Id
-	private long transactionId;
-	private long accountId;
-	private Date date;
-	private int amount;
-	private int balance;
-	private TransactionType type;
+  @Id
+  private long transactionId;
+  private long accountId;
+  private Date date;
+  private int amount;
+  private int balance;
+  private TransactionType type;
 
-	public Transaction() {
-		
-	}
-	public long getTransactionId() {
-		return transactionId;
-	}
+  public Transaction() {
 
-	public void setTransactionId(long transactionId) {
-		this.transactionId = transactionId;
-	}
+  }
 
-	public long getAccountId() {
-		return accountId;
-	}
+  public long getTransactionId() {
+    return transactionId;
+  }
 
-	public void setAccountId(long accountId) {
-		this.accountId = accountId;
-	}
+  public void setTransactionId(long transactionId) {
+    this.transactionId = transactionId;
+  }
 
-	public Date getDate() {
-		return date;
-	}
+  public long getAccountId() {
+    return accountId;
+  }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+  public void setAccountId(long accountId) {
+    this.accountId = accountId;
+  }
 
-	public int getAmount() {
-		return amount;
-	}
+  public Date getDate() {
+    return date;
+  }
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
-	public int getBalance() {
-		return balance;
-	}
+  public int getAmount() {
+    return amount;
+  }
 
-	public void setBalance(int balance) {
-		this.balance = balance;
-	}
+  public void setAmount(int amount) {
+    this.amount = amount;
+  }
 
-	public TransactionType getType() {
-		return type;
-	}
+  public int getBalance() {
+    return balance;
+  }
 
-	public void setType(TransactionType type) {
-		this.type = type;
-	}
-	public Transaction(TransactionType type, Date date, int amount, int balance) {
-		super();
-		this.type = type;
-		this.date = date;
-		this.amount = amount;
-		this.balance = balance;
-	}
+  public void setBalance(int balance) {
+    this.balance = balance;
+  }
 
-	
+  public TransactionType getType() {
+    return type;
+  }
+
+  public void setType(TransactionType type) {
+    this.type = type;
+  }
+
+  public Transaction(long accountId, Date date, int amount, int balance, TransactionType type) {
+    super();
+    this.accountId = accountId;
+    this.date = date;
+    this.amount = amount;
+    this.balance = balance;
+    this.type = type;
+  }
+
+
 
 }
