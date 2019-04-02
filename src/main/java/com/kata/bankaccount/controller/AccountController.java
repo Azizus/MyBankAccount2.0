@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.kata.bankaccount.domain.Account;
-import com.kata.bankaccount.domain.Transaction;
+import com.kata.bankaccount.dto.AccountDto;
+import com.kata.bankaccount.dto.TransactionDto;
 import com.kata.bankaccount.exceptions.TransactionException;
+import com.kata.bankaccount.mapper.AccountMapper;
+import com.kata.bankaccount.mapper.TransactionMapper;
 import com.kata.bankaccount.service.AccountService;
 import com.kata.bankaccount.service.TransactionService;
 
@@ -25,23 +28,23 @@ public class AccountController {
   private TransactionService transactionService;
 
   @PostMapping
-  public Account save(@RequestBody Account account) {
-    return accountService.save(account);
+  public AccountDto save(@RequestBody Account account) {
+    return AccountMapper.accountToAccountDto(accountService.save(account));
   }
 
   @GetMapping
-  public List<Account> find() {
+  public List<AccountDto> find() {
     List<Account> accounts = new ArrayList<Account>();
     accounts = accountService.findAll();
-    return accounts;
+    return AccountMapper.accountListToAccountDtoList(accounts);
   }
 
 
   @GetMapping("/{accountId}")
-  public Account findById(@PathVariable long accountId) throws AccountException {
+  public AccountDto findById(@PathVariable long accountId) throws AccountException {
     Account account = new Account();
     account = accountService.findByAccountId(accountId);
-    return account;
+    return AccountMapper.accountToAccountDto(account);
   }
 
   @DeleteMapping("/{accountId}")
@@ -50,16 +53,18 @@ public class AccountController {
   }
 
   @PostMapping("/{accountId}/deposit/{amount}")
-  public Transaction deposit(@PathVariable long accountId, @PathVariable int amount)
+  public TransactionDto deposit(@PathVariable long accountId, @PathVariable int amount)
       throws AccountException {
-    return transactionService.createDepositTransaction(accountId, amount);
+    return TransactionMapper.transactionToTransactionDto(
+        transactionService.createDepositTransaction(accountId, amount));
 
   }
 
   @PutMapping("/withdraw/{accountId}/{amount}")
-  public Transaction withdraw(@PathVariable long accountId, @PathVariable int amount)
+  public TransactionDto withdraw(@PathVariable long accountId, @PathVariable int amount)
       throws AccountException, TransactionException {
-    return transactionService.createWithdrawalTransaction(accountId, amount);
+    return TransactionMapper.transactionToTransactionDto(
+        transactionService.createWithdrawalTransaction(accountId, amount));
 
   }
 
