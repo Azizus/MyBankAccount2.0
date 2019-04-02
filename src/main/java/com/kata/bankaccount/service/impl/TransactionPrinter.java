@@ -28,6 +28,7 @@ public class TransactionPrinter {
         .collect(Collectors.toCollection(LinkedList::new)).iterator()
         .forEachRemaining(printer::print);
 
+
   }
 
   private String printLine(Transaction transaction) {
@@ -37,7 +38,6 @@ public class TransactionPrinter {
         .append(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append(" ").append("||")
         .append(" ").append(transaction.getAmount()).append(" ").append("||").append(" ")
         .append(transaction.getBalance());
-
     return sb.toString();
   }
 

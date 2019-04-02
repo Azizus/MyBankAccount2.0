@@ -24,15 +24,4 @@ public class Transaction {
   private int balance;
   private TransactionType type;
 
-  public Transaction(long accountId, Date date, int amount, int balance, TransactionType type) {
-    super();
-    this.accountId = accountId;
-    this.date = date;
-    this.amount = amount;
-    this.balance = balance;
-    this.type = type;
-  }
-
-
-
 }

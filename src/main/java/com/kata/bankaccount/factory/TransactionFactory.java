@@ -9,13 +9,13 @@ public class TransactionFactory {
 
   public Transaction instansiateDepositTransaction(Account account, int amount) {
     return Transaction.builder().accountId(account.getAccountId()).date(new Date()).amount(amount)
-        .balance(account.getBalance()).type(TransactionType.DEPOSIT).build();
+        .balance(account.getBalance() + amount).type(TransactionType.DEPOSIT).build();
 
   }
 
   public Transaction instansiateWithdrawalTransaction(Account account, int amount) {
     return Transaction.builder().accountId(account.getAccountId()).date(new Date()).amount(amount)
-        .balance(account.getBalance()).type(TransactionType.WITHDRAWAL).build();
+        .balance(account.getBalance() + amount).type(TransactionType.WITHDRAWAL).build();
 
   }
 
