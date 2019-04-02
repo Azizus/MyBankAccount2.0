@@ -2,6 +2,7 @@ package com.kata.bankaccount.service.impl;
 
 import java.util.List;
 import javax.security.auth.login.AccountException;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.exceptions.TransactionException;
@@ -24,12 +25,14 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
+  @Transactional
   public Transaction createDepositTransaction(long accountId, int amount) throws AccountException {
     return transactionRepo.save(transactionFactory.instansiateDepositTransaction(
         accountServiceImpl.depositInAccount(accountId, amount), amount));
   }
 
   @Override
+  @Transactional
   public Transaction createWithdrawalTransaction(long accountId, int amount)
       throws AccountException, TransactionException {
     return transactionRepo.save(transactionFactory.instansiateWithdrawalTransaction(

@@ -3,9 +3,7 @@ package com.kata.bankaccount.service.impl;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.utils.Printer;
@@ -19,16 +17,13 @@ public class TransactionPrinter {
     this.printer = printer;
   }
 
-  public static final String header = "OPERATION || DATE || AMOUNT || BALANCE";
-
+  public static final String HEADER = "OPERATION || DATE || AMOUNT || BALANCE";
 
   public void printLines(List<Transaction> transactions) {
-    printer.print(header);
-    transactions.stream().map(transaction -> printLine(transaction))
-        .collect(Collectors.toCollection(LinkedList::new)).iterator()
-        .forEachRemaining(printer::print);
-
-
+    printer.print(HEADER);
+    transactions.stream()//
+        .map(transaction -> printLine(transaction))//
+        .forEach(printer::print);
   }
 
   private String printLine(Transaction transaction) {

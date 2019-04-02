@@ -1,5 +1,6 @@
 package com.kata.bankaccount.service.impl;
 
+import java.util.List;
 import javax.security.auth.login.AccountException;
 import org.springframework.stereotype.Service;
 import com.kata.bankaccount.domain.Account;
@@ -35,36 +36,51 @@ public class AccountServiceImpl implements AccountService {
       throws TransactionException, AccountException {
 
     Account account = this.findByAccountId(accountId);
-    if (this.compare(account.getBalance(), amount)) {
-      int newBalance = account.getBalance() - amount;
-      account.setBalance(newBalance);
-      account = accountRepo.save(account);
-    }
-    return account;
+    if (!this.checkBalance(account.getBalance(), amount))
+      throw new TransactionException("Solde insuffisant!");
+    int newBalance = account.getBalance() - amount;
+    account.setBalance(newBalance);
+    return accountRepo.save(account);
+
   }
 
 
   @Override
-  public void printStatement(long accountId) {
+  public void printStatement(long accountId) throws AccountException {
+    this.findByAccountId(accountId);
     transactionPrinter.printLines(transactionRepo.findAllByAccountId(accountId));
   }
 
   @Override
   public Account findByAccountId(long accountId) throws AccountException {
     Account account = accountRepo.findByAccountId(accountId);
-    if (account != null) {
-      return account;
-    } else {
+    if (account == null)
       throw new AccountException("Compte non trouvé!");
-    }
+    return account;
   }
 
 
-  private boolean compare(int balance, int amount) throws TransactionException {
-    if (balance >= amount) {
-      return true;
-    } else
-      throw new TransactionException("Solde insuffisant!");
+  private boolean checkBalance(int balance, int amount) {
+    return balance >= amount;
+  }
+
+  @Override
+  public List<Account> findAll() {
+    return accountRepo.findAll();
+  }
+
+  @Override
+  public Account save(Account account) {
+    return accountRepo.save(account);
+  }
+
+  @Override
+  public boolean deleteById(long accountId) {
+    boolean deleted = false;
+    accountRepo.deleteById(accountId);
+    if (accountRepo.findByAccountId(accountId) == null)
+      deleted = true;
+    return deleted;
   }
 
 }

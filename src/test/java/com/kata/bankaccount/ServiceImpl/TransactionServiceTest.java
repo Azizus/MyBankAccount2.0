@@ -17,13 +17,14 @@ import com.kata.bankaccount.domain.TransactionType;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.factory.TransactionFactory;
 import com.kata.bankaccount.repository.TransactionRepository;
+import com.kata.bankaccount.service.TransactionService;
 import com.kata.bankaccount.service.impl.AccountServiceImpl;
 import com.kata.bankaccount.service.impl.TransactionServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
 
-  private TransactionServiceImpl transactionServiceImpl;
+  private TransactionService transactionService;
   @Mock
   TransactionRepository transactionRepo;
   @Mock
@@ -37,13 +38,13 @@ public class TransactionServiceTest {
 
   @Before
   public void initialize() {
-    transactionServiceImpl =
+    transactionService =
         new TransactionServiceImpl(transactionRepo, accountServiceImpl, transactionFactory);
   }
 
   @Test
   public void should_return_all_transactions() {
-    transactionServiceImpl.allTransactions();
+    transactionService.allTransactions();
 
     verify(transactionRepo).findAll();
   }
@@ -63,7 +64,7 @@ public class TransactionServiceTest {
 
     when(transactionFactory.instansiateDepositTransaction(account, amount)).thenReturn(transaction);
 
-    transactionServiceImpl.createDepositTransaction(accountId, amount);
+    transactionService.createDepositTransaction(accountId, amount);
 
     verify(transactionRepo).save(transaction);
 
@@ -86,7 +87,7 @@ public class TransactionServiceTest {
     when(transactionFactory.instansiateWithdrawalTransaction(account, amount))
         .thenReturn(transaction);
 
-    transactionServiceImpl.createWithdrawalTransaction(accountId, amount);
+    transactionService.createWithdrawalTransaction(accountId, amount);
 
     verify(transactionRepo).save(transaction);
 

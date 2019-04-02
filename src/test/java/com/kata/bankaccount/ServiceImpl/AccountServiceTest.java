@@ -18,13 +18,14 @@ import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.repository.TransactionRepository;
+import com.kata.bankaccount.service.AccountService;
 import com.kata.bankaccount.service.impl.AccountServiceImpl;
 import com.kata.bankaccount.service.impl.TransactionPrinter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
-  private AccountServiceImpl accountServiceImpl;
+  private AccountService accountService;
   @Mock
   TransactionRepository transactionRepo;
   @Mock
@@ -37,7 +38,7 @@ public class AccountServiceTest {
 
   @Before
   public void initialize() {
-    accountServiceImpl = new AccountServiceImpl(transactionRepo, transactionPrinter, accountRepo);
+    accountService = new AccountServiceImpl(transactionRepo, transactionPrinter, accountRepo);
   }
 
   @Test
@@ -49,7 +50,7 @@ public class AccountServiceTest {
 
     when(accountRepo.findByAccountId(account.getAccountId())).thenReturn(account);
 
-    accountServiceImpl.depositInAccount(accountId, amount);
+    accountService.depositInAccount(accountId, amount);
 
     verify(accountRepo).save(account);
 
@@ -65,7 +66,7 @@ public class AccountServiceTest {
 
     when(accountRepo.findByAccountId(account.getAccountId())).thenReturn(account);
 
-    accountServiceImpl.withdrawFromAccount(accountId, amount);
+    accountService.withdrawFromAccount(accountId, amount);
 
     verify(accountRepo).save(account);
 
@@ -83,7 +84,7 @@ public class AccountServiceTest {
 
     thrown.expect(TransactionException.class);
     thrown.expectMessage("Solde insuffisant!");
-    accountServiceImpl.withdrawFromAccount(account.getAccountId(), amount);
+    accountService.withdrawFromAccount(account.getAccountId(), amount);
   }
 
   @Test
@@ -91,19 +92,20 @@ public class AccountServiceTest {
     Account account = new Account();
     thrown.expect(AccountException.class);
     thrown.expectMessage("Compte non trouvé!");
-    accountServiceImpl.findByAccountId(account.getAccountId());
+    accountService.findByAccountId(account.getAccountId());
   }
 
   @Test
-  public void should_print_statement() {
+  public void should_print_statement() throws AccountException {
     long accountId = 1;
     int balance = 0;
     Account account = Account.builder().accountId(accountId).balance(balance).build();
     List<Transaction> transactions = Arrays.asList(new Transaction());
 
     given(transactionRepo.findAllByAccountId(account.getAccountId())).willReturn(transactions);
+    given(accountRepo.findByAccountId(accountId)).willReturn(account);
 
-    accountServiceImpl.printStatement(account.getAccountId());
+    accountService.printStatement(account.getAccountId());
 
     verify(transactionPrinter).printLines(transactions);
   }
