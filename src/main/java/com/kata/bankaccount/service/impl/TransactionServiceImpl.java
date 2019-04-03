@@ -30,20 +30,21 @@ public class TransactionServiceImpl implements TransactionService {
   @Override
   @Transactional
   public Transaction deposit(long accountId, int amount) throws AccountException {
-    return transactionRepo.save(transactionFactory.deposit(
-        accountServiceImpl.depositInAccount(accountId, amount), amount));
+    return transactionRepo.save(
+        transactionFactory.deposit(accountServiceImpl.depositInAccount(accountId, amount), amount));
   }
 
   @Override
   @Transactional
   public Transaction withdraw(long accountId, int amount)
       throws AccountException, TransactionException {
-    return transactionRepo.save(transactionFactory.withdraw(
-        accountServiceImpl.withdrawFromAccount(accountId, amount), amount));
+    return transactionRepo.save(transactionFactory
+        .withdraw(accountServiceImpl.withdrawFromAccount(accountId, amount), amount));
   }
 
   @Override
   public void printStatement(long accountId) throws AccountException {
+    // check account exists before getting transactions
     accountServiceImpl.findByAccountId(accountId);
     transactionPrinter.printLines(this.allTransactions(accountId));
   }
