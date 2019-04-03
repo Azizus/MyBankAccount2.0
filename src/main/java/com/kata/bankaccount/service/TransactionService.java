@@ -7,7 +7,7 @@ import com.kata.bankaccount.exceptions.TransactionException;
 
 public interface TransactionService {
 
-  public List<Transaction> allTransactions();
+  public List<Transaction> allTransactions(long accountId);
 
   public Transaction createDepositTransaction(long accountId, int amount) throws AccountException;
 

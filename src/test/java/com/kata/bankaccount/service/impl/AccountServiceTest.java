@@ -14,17 +14,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
-import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.AccountService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
   private AccountService accountService;
-  @Mock
-  TransactionRepository transactionRepo;
-  @Mock
-  TransactionPrinter transactionPrinter;
   @Mock
   AccountRepository accountRepo;
 
@@ -33,7 +28,7 @@ public class AccountServiceTest {
 
   @Before
   public void initialize() {
-    accountService = new AccountServiceImpl(transactionRepo, transactionPrinter, accountRepo);
+    accountService = new AccountServiceImpl(accountRepo);
   }
 
   @Test

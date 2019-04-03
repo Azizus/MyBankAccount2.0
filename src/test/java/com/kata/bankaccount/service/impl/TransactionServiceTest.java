@@ -46,10 +46,11 @@ public class TransactionServiceTest {
   }
 
   @Test
-  public void should_return_all_transactions() {
-    transactionService.allTransactions();
+  public void should_return_all_transactions_of_an_account() {
+    long accountId = 1;
+    transactionService.allTransactions(accountId);
 
-    verify(transactionRepo).findAll();
+    verify(transactionRepo).findAllByAccountId(accountId);
   }
 
   @Test

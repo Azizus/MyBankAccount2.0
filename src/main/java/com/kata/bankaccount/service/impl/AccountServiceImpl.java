@@ -6,20 +6,15 @@ import org.springframework.stereotype.Service;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
-import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.AccountService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
-  private TransactionRepository transactionRepo;
-  private TransactionPrinter transactionPrinter;
+
   private AccountRepository accountRepo;
 
-  public AccountServiceImpl(TransactionRepository transactionRepo,
-      TransactionPrinter transactionPrinter, AccountRepository accountRepo) {
-    this.transactionRepo = transactionRepo;
-    this.transactionPrinter = transactionPrinter;
+  public AccountServiceImpl(AccountRepository accountRepo) {
     this.accountRepo = accountRepo;
   }
 

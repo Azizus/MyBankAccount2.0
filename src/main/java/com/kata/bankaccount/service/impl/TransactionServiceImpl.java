@@ -45,12 +45,12 @@ public class TransactionServiceImpl implements TransactionService {
   @Override
   public void printStatement(long accountId) throws AccountException {
     accountServiceImpl.findByAccountId(accountId);
-    transactionPrinter.printLines(transactionRepo.findAllByAccountId(accountId));
+    transactionPrinter.printLines(this.allTransactions(accountId));
   }
 
   @Override
-  public List<Transaction> allTransactions() {
-    return transactionRepo.findAll();
+  public List<Transaction> allTransactions(long accountId) {
+    return transactionRepo.findAllByAccountId(accountId);
   }
 
 }
