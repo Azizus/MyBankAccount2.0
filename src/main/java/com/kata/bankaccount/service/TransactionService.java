@@ -9,9 +9,9 @@ public interface TransactionService {
 
   public List<Transaction> allTransactions(long accountId);
 
-  public Transaction createDepositTransaction(long accountId, int amount) throws AccountException;
+  public Transaction deposit(long accountId, int amount) throws AccountException;
 
-  public Transaction createWithdrawalTransaction(long accountId, int amount)
+  public Transaction withdraw(long accountId, int amount)
       throws AccountException, TransactionException;
 
   void printStatement(long accountId) throws AccountException;

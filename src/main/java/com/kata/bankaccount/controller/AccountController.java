@@ -33,7 +33,6 @@ public class AccountController {
     return AccountMapper.accountListToAccountDtoList(accounts);
   }
 
-
   @GetMapping("/{accountId}")
   public AccountDto findById(@PathVariable long accountId) throws AccountException {
     Account account = new Account();

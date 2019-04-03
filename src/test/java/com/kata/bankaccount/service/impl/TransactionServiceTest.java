@@ -68,7 +68,7 @@ public class TransactionServiceTest {
 
     when(transactionFactory.instansiateDepositTransaction(account, amount)).thenReturn(transaction);
 
-    transactionService.createDepositTransaction(accountId, amount);
+    transactionService.deposit(accountId, amount);
 
     verify(transactionRepo).save(transaction);
 
@@ -91,7 +91,7 @@ public class TransactionServiceTest {
     when(transactionFactory.instansiateWithdrawalTransaction(account, amount))
         .thenReturn(transaction);
 
-    transactionService.createWithdrawalTransaction(accountId, amount);
+    transactionService.withdraw(accountId, amount);
 
     verify(transactionRepo).save(transaction);
 

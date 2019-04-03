@@ -29,14 +29,14 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   @Transactional
-  public Transaction createDepositTransaction(long accountId, int amount) throws AccountException {
+  public Transaction deposit(long accountId, int amount) throws AccountException {
     return transactionRepo.save(transactionFactory.instansiateDepositTransaction(
         accountServiceImpl.depositInAccount(accountId, amount), amount));
   }
 
   @Override
   @Transactional
-  public Transaction createWithdrawalTransaction(long accountId, int amount)
+  public Transaction withdraw(long accountId, int amount)
       throws AccountException, TransactionException {
     return transactionRepo.save(transactionFactory.instansiateWithdrawalTransaction(
         accountServiceImpl.withdrawFromAccount(accountId, amount), amount));
