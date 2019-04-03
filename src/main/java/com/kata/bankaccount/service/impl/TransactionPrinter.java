@@ -29,9 +29,12 @@ public class TransactionPrinter {
   private String printLine(Transaction transaction) {
     LocalDate date = transaction.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     StringBuilder sb = new StringBuilder();
-    sb.append(transaction.getType()).append(" ").append("||").append(" ")
-        .append(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append(" ").append("||")
-        .append(" ").append(transaction.getAmount()).append(" ").append("||").append(" ")
+    sb.append(transaction.getType())//
+        .append(" || ")//
+        .append(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))//
+        .append(" || ")//
+        .append(transaction.getAmount())//
+        .append(" || ")//
         .append(transaction.getBalance());
     return sb.toString();
   }

@@ -1,8 +1,11 @@
-package com.kata.bankaccount.ServiceImpl;
+package com.kata.bankaccount.service.impl;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import javax.security.auth.login.AccountException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,8 +21,6 @@ import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.factory.TransactionFactory;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.TransactionService;
-import com.kata.bankaccount.service.impl.AccountServiceImpl;
-import com.kata.bankaccount.service.impl.TransactionServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
@@ -31,6 +32,8 @@ public class TransactionServiceTest {
   AccountServiceImpl accountServiceImpl;
   @Mock
   TransactionFactory transactionFactory;
+  @Mock
+  TransactionPrinter transactionPrinter;
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -38,8 +41,8 @@ public class TransactionServiceTest {
 
   @Before
   public void initialize() {
-    transactionService =
-        new TransactionServiceImpl(transactionRepo, accountServiceImpl, transactionFactory);
+    transactionService = new TransactionServiceImpl(transactionRepo, accountServiceImpl,
+        transactionFactory, transactionPrinter);
   }
 
   @Test
@@ -91,6 +94,18 @@ public class TransactionServiceTest {
 
     verify(transactionRepo).save(transaction);
 
+  }
+
+  @Test
+  public void should_print_statement() throws AccountException {
+    long accountId = 1;
+    List<Transaction> transactions = Arrays.asList(new Transaction());
+
+    given(transactionRepo.findAllByAccountId(accountId)).willReturn(transactions);
+
+    transactionService.printStatement(accountId);
+
+    verify(transactionPrinter).printLines(transactions);
   }
 
 }

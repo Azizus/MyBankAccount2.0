@@ -1,4 +1,4 @@
-package com.kata.bankaccount.ServiceImpl;
+package com.kata.bankaccount.service.impl;
 
 import static org.mockito.Mockito.verify;
 import java.time.LocalDate;

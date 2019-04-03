@@ -46,12 +46,6 @@ public class AccountServiceImpl implements AccountService {
 
 
   @Override
-  public void printStatement(long accountId) throws AccountException {
-    this.findByAccountId(accountId);
-    transactionPrinter.printLines(transactionRepo.findAllByAccountId(accountId));
-  }
-
-  @Override
   public Account findByAccountId(long accountId) throws AccountException {
     Account account = accountRepo.findByAccountId(accountId);
     if (account == null)

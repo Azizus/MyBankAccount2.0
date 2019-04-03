@@ -16,12 +16,15 @@ public class TransactionServiceImpl implements TransactionService {
   private TransactionRepository transactionRepo;
   private AccountServiceImpl accountServiceImpl;
   private TransactionFactory transactionFactory;
+  private TransactionPrinter transactionPrinter;
 
   public TransactionServiceImpl(TransactionRepository transactionRepo,
-      AccountServiceImpl accountServiceImpl, TransactionFactory transactionFactory) {
+      AccountServiceImpl accountServiceImpl, TransactionFactory transactionFactory,
+      TransactionPrinter transactionPrinter) {
     this.transactionRepo = transactionRepo;
     this.accountServiceImpl = accountServiceImpl;
     this.transactionFactory = transactionFactory;
+    this.transactionPrinter = transactionPrinter;
   }
 
   @Override
@@ -37,6 +40,12 @@ public class TransactionServiceImpl implements TransactionService {
       throws AccountException, TransactionException {
     return transactionRepo.save(transactionFactory.instansiateWithdrawalTransaction(
         accountServiceImpl.withdrawFromAccount(accountId, amount), amount));
+  }
+
+  @Override
+  public void printStatement(long accountId) throws AccountException {
+    accountServiceImpl.findByAccountId(accountId);
+    transactionPrinter.printLines(transactionRepo.findAllByAccountId(accountId));
   }
 
   @Override

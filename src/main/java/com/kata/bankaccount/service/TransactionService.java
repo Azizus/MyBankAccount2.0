@@ -14,6 +14,7 @@ public interface TransactionService {
   public Transaction createWithdrawalTransaction(long accountId, int amount)
       throws AccountException, TransactionException;
 
+  void printStatement(long accountId) throws AccountException;
 
 
 }

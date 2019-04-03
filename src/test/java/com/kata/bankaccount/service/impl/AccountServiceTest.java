@@ -1,10 +1,8 @@
-package com.kata.bankaccount.ServiceImpl;
+package com.kata.bankaccount.service.impl;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import java.util.Arrays;
-import java.util.List;
 import javax.security.auth.login.AccountException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,13 +12,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import com.kata.bankaccount.domain.Account;
-import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.AccountService;
-import com.kata.bankaccount.service.impl.AccountServiceImpl;
-import com.kata.bankaccount.service.impl.TransactionPrinter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
@@ -95,18 +90,4 @@ public class AccountServiceTest {
     accountService.findByAccountId(account.getAccountId());
   }
 
-  @Test
-  public void should_print_statement() throws AccountException {
-    long accountId = 1;
-    int balance = 0;
-    Account account = Account.builder().accountId(accountId).balance(balance).build();
-    List<Transaction> transactions = Arrays.asList(new Transaction());
-
-    given(transactionRepo.findAllByAccountId(account.getAccountId())).willReturn(transactions);
-    given(accountRepo.findByAccountId(accountId)).willReturn(account);
-
-    accountService.printStatement(account.getAccountId());
-
-    verify(transactionPrinter).printLines(transactions);
-  }
 }
