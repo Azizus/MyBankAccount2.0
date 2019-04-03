@@ -30,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
   @Override
   @Transactional
   public Transaction deposit(long accountId, int amount) throws AccountException {
-    return transactionRepo.save(transactionFactory.instansiateDepositTransaction(
+    return transactionRepo.save(transactionFactory.deposit(
         accountServiceImpl.depositInAccount(accountId, amount), amount));
   }
 
@@ -38,7 +38,7 @@ public class TransactionServiceImpl implements TransactionService {
   @Transactional
   public Transaction withdraw(long accountId, int amount)
       throws AccountException, TransactionException {
-    return transactionRepo.save(transactionFactory.instansiateWithdrawalTransaction(
+    return transactionRepo.save(transactionFactory.withdraw(
         accountServiceImpl.withdrawFromAccount(accountId, amount), amount));
   }
 

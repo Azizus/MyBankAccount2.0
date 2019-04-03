@@ -1,5 +1,6 @@
 package com.kata.bankaccount.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.security.auth.login.AccountException;
 import org.springframework.stereotype.Service;
@@ -48,14 +49,15 @@ public class AccountServiceImpl implements AccountService {
     return account;
   }
 
-
   private boolean checkBalance(int balance, int amount) {
     return balance >= amount;
   }
 
   @Override
   public List<Account> findAll() {
-    return accountRepo.findAll();
+    List<Account> accounts = new ArrayList<>();
+    accounts = accountRepo.findAll();
+    return accounts;
   }
 
   @Override
@@ -64,12 +66,11 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public boolean deleteById(long accountId) {
-    boolean deleted = false;
+  public boolean deleteById(long accountId) throws AccountException {
     accountRepo.deleteById(accountId);
-    if (accountRepo.findByAccountId(accountId) == null)
-      deleted = true;
-    return deleted;
+    if (this.findByAccountId(accountId) == null)
+      throw new AccountException("Compte non trouvé!");
+    return true;
   }
 
 }

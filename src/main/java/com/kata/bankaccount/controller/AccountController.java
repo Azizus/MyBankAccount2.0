@@ -41,7 +41,7 @@ public class AccountController {
   }
 
   @DeleteMapping("/{accountId}")
-  public boolean deleteById(@PathVariable long accountId) {
+  public boolean deleteById(@PathVariable long accountId) throws AccountException {
     return accountService.deleteById(accountId);
   }
 

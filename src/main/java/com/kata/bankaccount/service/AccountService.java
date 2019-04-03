@@ -21,7 +21,7 @@ public interface AccountService {
 
   Account save(Account account);
 
-  boolean deleteById(long accountId);
+  boolean deleteById(long accountId) throws AccountException;
 
 
 }

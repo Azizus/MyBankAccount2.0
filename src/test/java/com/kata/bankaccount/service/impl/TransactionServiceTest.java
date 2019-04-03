@@ -31,9 +31,9 @@ public class TransactionServiceTest {
   @Mock
   AccountServiceImpl accountServiceImpl;
   @Mock
-  TransactionFactory transactionFactory;
-  @Mock
   TransactionPrinter transactionPrinter;
+  @Mock
+  TransactionFactory transactionFactory;
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -66,7 +66,7 @@ public class TransactionServiceTest {
 
     when(accountServiceImpl.depositInAccount(accountId, amount)).thenReturn(account);
 
-    when(transactionFactory.instansiateDepositTransaction(account, amount)).thenReturn(transaction);
+    when(transactionFactory.deposit(account, amount)).thenReturn(transaction);
 
     transactionService.deposit(accountId, amount);
 
@@ -88,8 +88,7 @@ public class TransactionServiceTest {
 
     when(accountServiceImpl.withdrawFromAccount(accountId, amount)).thenReturn(account);
 
-    when(transactionFactory.instansiateWithdrawalTransaction(account, amount))
-        .thenReturn(transaction);
+    when(transactionFactory.withdraw(account, amount)).thenReturn(transaction);
 
     transactionService.withdraw(accountId, amount);
 
