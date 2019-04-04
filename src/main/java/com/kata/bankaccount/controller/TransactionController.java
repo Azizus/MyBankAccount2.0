@@ -11,8 +11,10 @@ import com.kata.bankaccount.dto.TransactionDto;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.mapper.TransactionMapper;
 import com.kata.bankaccount.service.TransactionService;
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/transactions")
 public class TransactionController {
 

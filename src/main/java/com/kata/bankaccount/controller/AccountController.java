@@ -14,8 +14,10 @@ import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.dto.AccountDto;
 import com.kata.bankaccount.mapper.AccountMapper;
 import com.kata.bankaccount.service.AccountService;
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/accounts")
 public class AccountController {
 
