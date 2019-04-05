@@ -2,6 +2,7 @@ package com.kata.bankaccount.domain;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Transaction {
   @Id
+  @GeneratedValue
   private long transactionId;
   private long accountId;
   private Date date;
