@@ -4,32 +4,30 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import javax.security.auth.login.AccountException;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.service.AccountService;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class AccountServiceTest {
 
-  private AccountService accountService;
+  @InjectMocks
+  private AccountService accountService = new AccountServiceImpl();
   @Mock
   AccountRepository accountRepo;
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
-
-  @Before
-  public void initialize() {
-    accountService = new AccountServiceImpl(accountRepo);
-  }
 
   @Test
   public void should_deposit_money_in_account_and_create_transaction() throws AccountException {

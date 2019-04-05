@@ -3,6 +3,7 @@ package com.kata.bankaccount.service.impl;
 import java.util.List;
 import javax.security.auth.login.AccountException;
 import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.exceptions.TransactionException;
@@ -13,19 +14,14 @@ import com.kata.bankaccount.service.TransactionService;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
+  @Autowired
   private TransactionRepository transactionRepo;
+  @Autowired
   private AccountServiceImpl accountServiceImpl;
+  @Autowired
   private TransactionFactory transactionFactory;
+  @Autowired
   private TransactionPrinter transactionPrinter;
-
-  public TransactionServiceImpl(TransactionRepository transactionRepo,
-      AccountServiceImpl accountServiceImpl, TransactionFactory transactionFactory,
-      TransactionPrinter transactionPrinter) {
-    this.transactionRepo = transactionRepo;
-    this.accountServiceImpl = accountServiceImpl;
-    this.transactionFactory = transactionFactory;
-    this.transactionPrinter = transactionPrinter;
-  }
 
   @Override
   @Transactional

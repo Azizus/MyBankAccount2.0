@@ -7,13 +7,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.security.auth.login.AccountException;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.domain.TransactionType;
@@ -22,10 +23,12 @@ import com.kata.bankaccount.factory.TransactionFactory;
 import com.kata.bankaccount.repository.TransactionRepository;
 import com.kata.bankaccount.service.TransactionService;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class TransactionServiceTest {
 
-  private TransactionService transactionService;
+  @InjectMocks
+  private TransactionService transactionService = new TransactionServiceImpl();
   @Mock
   TransactionRepository transactionRepo;
   @Mock
@@ -37,13 +40,6 @@ public class TransactionServiceTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
-
-
-  @Before
-  public void initialize() {
-    transactionService = new TransactionServiceImpl(transactionRepo, accountServiceImpl,
-        transactionFactory, transactionPrinter);
-  }
 
   @Test
   public void should_return_all_transactions_of_an_account() {

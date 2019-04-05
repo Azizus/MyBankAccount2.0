@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.utils.Printer;
@@ -11,11 +12,9 @@ import com.kata.bankaccount.utils.Printer;
 @Service
 public class TransactionPrinter {
 
+  @Autowired
   private Printer printer;
 
-  public TransactionPrinter(Printer printer) {
-    this.printer = printer;
-  }
 
   public static final String HEADER = "OPERATION || DATE || AMOUNT || BALANCE";
 

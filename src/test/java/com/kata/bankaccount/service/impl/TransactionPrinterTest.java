@@ -9,31 +9,27 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.security.auth.login.AccountException;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.domain.TransactionType;
 import com.kata.bankaccount.exceptions.TransactionException;
-import com.kata.bankaccount.service.impl.TransactionPrinter;
-import com.kata.bankaccount.service.impl.TransactionServiceImpl;
 import com.kata.bankaccount.utils.Printer;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class TransactionPrinterTest {
 
-  private TransactionPrinter transactionPrinter;
+  @InjectMocks
+  private TransactionPrinter transactionPrinter = new TransactionPrinter();
   @Mock
   Printer printer;
   @Mock
   TransactionServiceImpl transactionServiceImpl;
-
-  @Before
-  public void initialize() {
-    transactionPrinter = new TransactionPrinter(printer);
-  }
 
   @Test
   public void should_print_transactions_with_header()
