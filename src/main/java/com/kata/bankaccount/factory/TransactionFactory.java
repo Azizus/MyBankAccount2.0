@@ -14,7 +14,7 @@ public class TransactionFactory {
         .accountId(account.getAccountId())//
         .date(new Date())//
         .amount(amount)//
-        .balance(account.getBalance() + amount)//
+        .balance(account.getBalance())//
         .type(TransactionType.DEPOSIT)//
         .build();
 
@@ -24,7 +24,7 @@ public class TransactionFactory {
     return Transaction.builder()//
         .accountId(account.getAccountId())//
         .date(new Date())//
-        .amount(amount).balance(account.getBalance() + amount)//
+        .amount(amount).balance(account.getBalance())//
         .type(TransactionType.WITHDRAWAL)//
         .build();
 
