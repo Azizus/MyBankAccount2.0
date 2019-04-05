@@ -1,8 +1,10 @@
 package com.kata.bankaccount.controller;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.kata.bankaccount.domain.Account;
+import com.kata.bankaccount.dto.AccountDto;
 import com.kata.bankaccount.service.AccountService;
 import io.restassured.RestAssured;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,12 +35,6 @@ public class AccountControllerTest {
     RestAssured.port = port;
   }
 
-  @Test
-  public void should_return_empty_list() throws Exception {
-    given().when().get("/accounts")//
-        .then().statusCode(200)//
-        .assertThat().body("results.size()", is(equalTo(0)));
-  }
 
   @Test
   public void should_save_account() {
@@ -48,6 +46,34 @@ public class AccountControllerTest {
 
   }
 
+  @Test
+  public void should_return_account_list_containing_one_value() throws Exception {
+
+    accountService.save(account);
+
+    AccountDto[] accountsDto = given().when().get("/accounts").as(AccountDto[].class);
+
+    assertThat(accountsDto.length).isEqualTo(1);
+    assertThat(accountsDto[0].getAccountId()).isEqualTo(1);
+    assertThat(accountsDto[0].getBalance()).isEqualTo(100);
+    // given().when().get("/accounts")//
+    // .then().statusCode(200)//
+    // .assertThat().body("results.size()", is(equalTo(1))).extract().jsonPath()
+    // .using((GsonObjectMapperFactory) (aClass, s) -> new GsonBuilder().setPrettyPrinting()
+    // .create()).getList("findAll {account.accountId == 1}", Account.class))//
+    // .assertThat().body("accountId", is(equalTo(1))).assertThat()
+    // .body("balance", is(equalTo(100)));
+  }
+
+  @Test
+  public void should_find_account_by_id() {
+    accountService.save(account);
+    given().contentType("application/json").queryParam("accountId", "1")//
+        .when().get("accounts")//
+        .then().statusCode(200)//
+        .assertThat().body("accountId", is(equalTo(Arrays.asList(1)))).assertThat()
+        .body("balance", is(equalTo(Arrays.asList(100))));
+  }
 
 
 }
