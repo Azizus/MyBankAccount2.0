@@ -17,7 +17,6 @@ import com.kata.bankaccount.dto.AccountDto;
 import com.kata.bankaccount.service.AccountService;
 import io.restassured.RestAssured;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AccountControllerTest {
@@ -56,23 +55,24 @@ public class AccountControllerTest {
     assertThat(accountsDto.length).isEqualTo(1);
     assertThat(accountsDto[0].getAccountId()).isEqualTo(1);
     assertThat(accountsDto[0].getBalance()).isEqualTo(100);
-    // given().when().get("/accounts")//
-    // .then().statusCode(200)//
-    // .assertThat().body("results.size()", is(equalTo(1))).extract().jsonPath()
-    // .using((GsonObjectMapperFactory) (aClass, s) -> new GsonBuilder().setPrettyPrinting()
-    // .create()).getList("findAll {account.accountId == 1}", Account.class))//
-    // .assertThat().body("accountId", is(equalTo(1))).assertThat()
-    // .body("balance", is(equalTo(100)));
   }
 
   @Test
   public void should_find_account_by_id() {
     accountService.save(account);
     given().contentType("application/json").queryParam("accountId", "1")//
-        .when().get("accounts")//
+        .when().get("/accounts")//
         .then().statusCode(200)//
         .assertThat().body("accountId", is(equalTo(Arrays.asList(1)))).assertThat()
         .body("balance", is(equalTo(Arrays.asList(100))));
+  }
+
+  @Test
+  public void should_not_allow_delete() {
+    accountService.save(account);
+
+    given().queryParam("accountId", 1).when().delete("/accounts").then().statusCode(405);
+
   }
 
 
