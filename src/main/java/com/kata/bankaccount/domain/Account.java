@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Account {
 
+  public boolean hasBalanceAbove(int amount) {
+    return getBalance() < amount;
+  }
   @Id
   private long accountId;
   private int balance;

@@ -34,7 +34,6 @@ public class AccountControllerTest {
     RestAssured.port = port;
   }
 
-
   @Test
   public void should_save_account() {
     given().contentType("application/json").body(account)//
@@ -51,7 +50,7 @@ public class AccountControllerTest {
 
     AccountDto[] accountsDto = given().when().get("/accounts").as(AccountDto[].class);
 
-    assertThat(accountsDto.length).isEqualTo(1);
+    assertThat(accountsDto).hasSize(1);
     assertThat(accountsDto[0].getAccountId()).isEqualTo(1);
     assertThat(accountsDto[0].getBalance()).isEqualTo(100);
   }

@@ -17,6 +17,7 @@ public class AccountServiceImpl implements AccountService {
   @Autowired
   private AccountRepository accountRepo;
 
+  @Transactional
   public Account depositInAccount(long accountId, int amount) throws AccountException {
     Account account = this.findByAccountId(accountId);
     int newBalance = account.getBalance() + amount;
@@ -25,11 +26,12 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
+  @Transactional
   public Account withdrawFromAccount(long accountId, int amount)
       throws TransactionException, AccountException {
 
     Account account = this.findByAccountId(accountId);
-    if (!this.checkBalance(account.getBalance(), amount))
+    if (account.hasBalanceAbove(amount))
       throw new TransactionException("Solde insuffisant!");
     int newBalance = account.getBalance() - amount;
     account.setBalance(newBalance);
@@ -44,10 +46,6 @@ public class AccountServiceImpl implements AccountService {
     return account;
   }
 
-  private boolean checkBalance(int balance, int amount) {
-    return balance >= amount;
-  }
-
   @Override
   public List<Account> findAll() {
     List<Account> accounts = new ArrayList<>();
@@ -56,6 +54,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
+  @Transactional
   public Account save(Account account) {
     return accountRepo.save(account);
   }
