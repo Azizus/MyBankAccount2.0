@@ -4,7 +4,6 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +15,7 @@ import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.dto.AccountDto;
 import com.kata.bankaccount.service.AccountService;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -47,7 +47,6 @@ public class AccountControllerTest {
 
   @Test
   public void should_return_account_list_containing_one_value() throws Exception {
-
     accountService.save(account);
 
     AccountDto[] accountsDto = given().when().get("/accounts").as(AccountDto[].class);
@@ -60,20 +59,22 @@ public class AccountControllerTest {
   @Test
   public void should_find_account_by_id() {
     accountService.save(account);
-    given().contentType("application/json").queryParam("accountId", "1")//
-        .when().get("/accounts")//
+    given().contentType("application/json")//
+        .pathParam("accountId", "1")//
+        .when().get("/accounts/{accountId}")//
         .then().statusCode(200)//
-        .assertThat().body("accountId", is(equalTo(Arrays.asList(1)))).assertThat()
-        .body("balance", is(equalTo(Arrays.asList(100))));
+        .assertThat().body("accountId", is(equalTo(1)))//
+        .assertThat().body("balance", is(equalTo(100)));
   }
 
   @Test
   public void should_not_allow_delete() {
     accountService.save(account);
 
-    given().queryParam("accountId", 1).when().delete("/accounts").then().statusCode(405);
-
+    given().contentType(ContentType.JSON)//
+        .pathParam("accountId", "1")//
+        .when().delete("/accounts/{accountId}")//
+        .then().statusCode(200);
   }
-
 
 }

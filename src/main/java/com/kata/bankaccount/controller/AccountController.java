@@ -22,30 +22,31 @@ public class AccountController {
 
   @Autowired
   private AccountService accountService;
+  @Autowired
+  private AccountMapper accountMapper;
 
 
   @PostMapping
   public AccountDto save(@RequestBody Account account) {
-    return AccountMapper.accountToAccountDto(accountService.save(account));
+    return accountMapper.accountToAccountDto(accountService.save(account));
   }
 
   @GetMapping
   public List<AccountDto> find() {
     List<Account> accounts = new ArrayList<Account>();
     accounts = accountService.findAll();
-    return AccountMapper.accountListToAccountDtoList(accounts);
+    return accountMapper.accountListToAccountDtoList(accounts);
   }
 
   @GetMapping("/{accountId}")
   public AccountDto findById(@PathVariable long accountId) throws AccountException {
-    Account account = new Account();
-    account = accountService.findByAccountId(accountId);
-    return AccountMapper.accountToAccountDto(account);
+    Account account = accountService.findByAccountId(accountId);
+    return accountMapper.accountToAccountDto(account);
   }
 
   @DeleteMapping("/{accountId}")
-  public boolean deleteById(@PathVariable long accountId) throws AccountException {
-    return accountService.deleteById(accountId);
+  public void deleteById(@PathVariable long accountId) throws AccountException {
+    accountService.deleteById(accountId);
   }
 
 }
