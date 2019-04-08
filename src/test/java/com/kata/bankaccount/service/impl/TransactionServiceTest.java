@@ -99,7 +99,7 @@ public class TransactionServiceTest {
 
     given(transactionRepo.findAllByAccountId(accountId)).willReturn(transactions);
 
-    transactionService.printStatement(accountId);
+    transactionService.printTransactions(accountId);
 
     verify(transactionPrinter).printLines(transactions);
   }

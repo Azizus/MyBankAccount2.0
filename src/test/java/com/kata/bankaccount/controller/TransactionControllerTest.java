@@ -45,8 +45,9 @@ public class TransactionControllerTest {
 
     int depositAmount = 100;
     given().contentType("application/json")//
-        .when().post("/transactions/" + account.getAccountId() + "/deposit/" + depositAmount + "")//
-        .then().statusCode(200)//
+        .pathParam("accountId", account.getAccountId())//
+        .pathParam("amount", depositAmount)//
+        .when().post("/accounts/{accountId}/deposit/{amount}").then().statusCode(200)//
         .assertThat().body("accountId", is(equalTo(1)))//
         .assertThat().body("balance", is(equalTo(200)))//
         .assertThat().body("amount", is(equalTo(100)))//
@@ -61,7 +62,8 @@ public class TransactionControllerTest {
     accountService.save(account);
     int withdrawAmount = 70;
     given().contentType("application/json")//
-        .when().post("/transactions/" + account.getAccountId() + "/withdraw/" + withdrawAmount + "")//
+        .pathParam("accountId", account.getAccountId()).pathParam("amount", withdrawAmount).when()
+        .post("/accounts/{accountId}/withdraw/{amount}")//
         .then().statusCode(200)//
         .assertThat().body("accountId", is(equalTo(1)))//
         .assertThat().body("balance", is(equalTo(30)))//

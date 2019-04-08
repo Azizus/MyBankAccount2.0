@@ -44,6 +44,11 @@ public class AccountController {
     return accountMapper.accountToAccountDto(account);
   }
 
+  @GetMapping("/{accountId}/print")
+  public void printStatement(@PathVariable long accountId) throws AccountException {
+    accountService.printStatement(accountId);
+  }
+
   @DeleteMapping("/{accountId}")
   public void deleteById(@PathVariable long accountId) throws AccountException {
     accountService.deleteById(accountId);

@@ -23,4 +23,6 @@ public interface AccountService {
 
   void deleteById(long accountId) throws AccountException;
 
+  void printStatement(long accountId) throws AccountException;
+
 }

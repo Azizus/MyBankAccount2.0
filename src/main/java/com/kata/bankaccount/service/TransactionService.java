@@ -16,7 +16,7 @@ public interface TransactionService {
   public Transaction withdraw(long accountId, int amount)
       throws AccountException, TransactionException;
 
-  void printStatement(long accountId) throws AccountException;
+  public void printTransactions(long accountId);
 
 
 }

@@ -5,11 +5,11 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.utils.Printer;
 
-@Service
+@Component
 public class TransactionPrinter {
 
   @Autowired

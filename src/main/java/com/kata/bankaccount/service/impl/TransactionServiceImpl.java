@@ -39,15 +39,13 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
-  public void printStatement(long accountId) throws AccountException {
-    // check account exists before getting transactions
-    accountServiceImpl.findByAccountId(accountId);
-    transactionPrinter.printLines(this.allTransactions(accountId));
+  public List<Transaction> allTransactions(long accountId) {
+    return transactionRepo.findAllByAccountId(accountId);
   }
 
   @Override
-  public List<Transaction> allTransactions(long accountId) {
-    return transactionRepo.findAllByAccountId(accountId);
+  public void printTransactions(long accountId) {
+    transactionPrinter.printLines(this.allTransactions(accountId));
   }
 
 }

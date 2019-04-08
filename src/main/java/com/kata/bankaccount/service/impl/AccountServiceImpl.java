@@ -10,12 +10,15 @@ import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.service.AccountService;
+import com.kata.bankaccount.service.TransactionService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
   @Autowired
   private AccountRepository accountRepo;
+  @Autowired
+  private TransactionService transactionService;
 
   @Transactional
   public Account depositInAccount(long accountId, int amount) throws AccountException {
@@ -65,6 +68,13 @@ public class AccountServiceImpl implements AccountService {
     if (!accountRepo.existsById(accountId))
       throw new AccountException("Compte non trouvé!");
     accountRepo.deleteById(accountId);
+  }
+
+  @Override
+  public void printStatement(long accountId) throws AccountException {
+    if (!accountRepo.existsById(accountId))
+      throw new AccountException("Compte non trouvé!");
+    transactionService.printTransactions(accountId);
   }
 
 }
