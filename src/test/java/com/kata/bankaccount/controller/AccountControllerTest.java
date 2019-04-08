@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import javax.security.auth.login.AccountException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.dto.AccountDto;
+import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.service.AccountService;
+import com.kata.bankaccount.service.TransactionService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
@@ -28,6 +31,8 @@ public class AccountControllerTest {
 
   @Autowired
   private AccountService accountService;
+  @Autowired
+  TransactionService transactionService;
 
   @Before
   public void setUp() throws Exception {
@@ -67,12 +72,24 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void should_not_allow_delete() {
+  public void should_delete_account_by_its_id() {
     accountService.save(account);
 
     given().contentType(ContentType.JSON)//
         .pathParam("accountId", "1")//
         .when().delete("/accounts/{accountId}")//
+        .then().statusCode(200);
+  }
+
+  @Test
+  public void should_print_statement_of_account() throws AccountException, TransactionException {
+    accountService.save(account);
+
+    transactionService.deposit(account.getAccountId(), 100);
+    transactionService.withdraw(account.getAccountId(), 50);
+
+    given().contentType("application/json")//
+        .when().get("/transactions/" + account.getAccountId() + "")//
         .then().statusCode(200);
   }
 
