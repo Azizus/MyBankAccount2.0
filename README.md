@@ -36,7 +36,7 @@ mvn test
 ### docker
 ```
 docker-compose up
-Try the app at this url at this URL http://localhost:8080
+Try the app with docker at this url at this URL http://localhost:8080
 ```
 ### swagger2
 ```
