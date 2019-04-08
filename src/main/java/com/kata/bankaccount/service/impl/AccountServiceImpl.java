@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
   public Account findByAccountId(long accountId) throws AccountException {
     Account account = accountRepo.findByAccountId(accountId);
     if (account == null)
-      throw new AccountException("Compte non trouvé!");
+      throw new AccountException("Compte non trouve!");
     return account;
   }
 
@@ -66,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
   @Transactional
   public void deleteById(long accountId) throws AccountException {
     if (!accountRepo.existsById(accountId))
-      throw new AccountException("Compte non trouvé!");
+      throw new AccountException("Compte non trouve!");
     accountRepo.deleteById(accountId);
   }
 

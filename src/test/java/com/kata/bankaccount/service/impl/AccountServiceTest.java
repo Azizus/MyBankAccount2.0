@@ -79,7 +79,7 @@ public class AccountServiceTest {
   public void should_thow_exception_when_account_not_found() throws AccountException {
     Account account = new Account();
     thrown.expect(AccountException.class);
-    thrown.expectMessage("Compte non trouvé!");
+    thrown.expectMessage("Compte non trouve!");
     accountService.findByAccountId(account.getAccountId());
   }
 
