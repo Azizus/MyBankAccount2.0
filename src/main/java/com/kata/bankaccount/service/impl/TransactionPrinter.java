@@ -19,7 +19,6 @@ public class TransactionPrinter {
   @Autowired
   private Printer printer;
 
-
   public List<String> printLines(List<Transaction> transactions) {
     List<String> toPrint = new ArrayList<String>(Arrays.asList(new String[] {//
         printer.print(StatementStr.HEADER), //
