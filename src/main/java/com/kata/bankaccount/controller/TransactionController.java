@@ -17,19 +17,21 @@ public class TransactionController {
 
   @Autowired
   private TransactionService transactionService;
+  @Autowired
+  private TransactionMapper transactionMapper;
 
 
   @PostMapping("/deposit/{amount}")
   public TransactionDto deposit(@PathVariable long accountId, @PathVariable int amount)
       throws AccountException {
-    return TransactionMapper
+    return transactionMapper
         .transactionToTransactionDto(transactionService.deposit(accountId, amount));
   }
 
   @PostMapping("/withdraw/{amount}")
   public TransactionDto withdraw(@PathVariable long accountId, @PathVariable int amount)
       throws AccountException, TransactionException {
-    return TransactionMapper
+    return transactionMapper
         .transactionToTransactionDto(transactionService.withdraw(accountId, amount));
   }
 }
