@@ -7,5 +7,5 @@ Feature: Withdrawal Feature
     Given the ID of the account
     And the amount to withdraw
     When balance is sufficient
-    And account is successfully updated
+    And the account exists And it's successfully updated
     Then create and save a withdrawal transaction
