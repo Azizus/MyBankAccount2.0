@@ -47,7 +47,8 @@ public class TransactionControllerTest {
     given().contentType("application/json")//
         .pathParam("accountId", account.getAccountId())//
         .pathParam("amount", depositAmount)//
-        .when().post("/accounts/{accountId}/deposit/{amount}").then().statusCode(200)//
+        .when().post("/accounts/{accountId}/deposit/{amount}")//
+        .then().statusCode(200)//
         .assertThat().body("accountId", is(equalTo(1)))//
         .assertThat().body("balance", is(equalTo(200)))//
         .assertThat().body("amount", is(equalTo(100)))//

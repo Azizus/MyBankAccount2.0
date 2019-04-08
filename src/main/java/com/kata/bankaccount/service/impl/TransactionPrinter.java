@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.kata.bankaccount.domain.Transaction;
@@ -21,7 +22,7 @@ public class TransactionPrinter {
   public void printLines(List<Transaction> transactions) {
     printer.print(HEADER);
     transactions.stream()//
-        .map(transaction -> printLine(transaction))//
+        .map(transaction -> printLine(transaction)).collect(Collectors.toList())//
         .forEach(printer::print);
   }
 
