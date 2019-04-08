@@ -45,8 +45,8 @@ public class AccountController {
   }
 
   @GetMapping("/{accountId}/print")
-  public void printStatement(@PathVariable long accountId) throws AccountException {
-    accountService.printStatement(accountId);
+  public List<String> printStatement(@PathVariable long accountId) throws AccountException {
+    return accountService.printStatement(accountId);
   }
 
   @DeleteMapping("/{accountId}")

@@ -71,10 +71,10 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public void printStatement(long accountId) throws AccountException {
+  public List<String> printStatement(long accountId) throws AccountException {
     if (!accountRepo.existsById(accountId))
       throw new AccountException("Compte non trouvé!");
-    transactionService.printTransactions(accountId);
+    return transactionService.printTransactions(accountId);
   }
 
 }

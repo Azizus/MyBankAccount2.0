@@ -44,8 +44,8 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
-  public void printTransactions(long accountId) {
-    transactionPrinter.printLines(this.allTransactions(accountId));
+  public List<String> printTransactions(long accountId) {
+    return transactionPrinter.printLines(this.allTransactions(accountId));
   }
 
 }

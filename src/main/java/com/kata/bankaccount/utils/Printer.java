@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class Printer {
 
-  public void print(String text) {
+  public String print(String text) {
     System.out.println(text);
+    return text;
   }
 }
