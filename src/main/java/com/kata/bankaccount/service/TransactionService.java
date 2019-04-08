@@ -1,5 +1,6 @@
 package com.kata.bankaccount.service;
 
+import java.util.LinkedList;
 import java.util.List;
 import javax.security.auth.login.AccountException;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public interface TransactionService {
   public Transaction withdraw(long accountId, int amount)
       throws AccountException, TransactionException;
 
-  public List<String> printTransactions(long accountId);
+  public LinkedList<String> printTransactions(long accountId);
 
 
 }

@@ -3,8 +3,7 @@ package com.kata.bankaccount.service.impl;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,14 @@ public class TransactionPrinter {
   @Autowired
   private Printer printer;
 
-  public List<String> printLines(List<Transaction> transactions) {
-    List<String> toPrint = new ArrayList<String>(Arrays.asList(new String[] {//
-        printer.print(StatementStr.HEADER), //
-        printer.print(StatementStr.accountInformation(transactions.get(0).getAccountId()))}));
+  public LinkedList<String> printLines(List<Transaction> transactions) {
+    LinkedList<String> toPrint = new LinkedList<String>();
+    toPrint.add(printer.print(StatementStr.HEADER));
+    toPrint.add(printer.print(StatementStr.accountInformation(transactions.get(0).getAccountId())));// )
 
     toPrint.addAll(transactions.stream()//
         .map(transaction -> printLine(transaction))//
-        .collect(Collectors.toList()));//
+        .collect(Collectors.toCollection(LinkedList::new)));//
 
     return toPrint;
   }

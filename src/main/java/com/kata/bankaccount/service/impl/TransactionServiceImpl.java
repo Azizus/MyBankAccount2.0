@@ -1,5 +1,6 @@
 package com.kata.bankaccount.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import javax.security.auth.login.AccountException;
 import javax.transaction.Transactional;
@@ -44,7 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
-  public List<String> printTransactions(long accountId) {
+  public LinkedList<String> printTransactions(long accountId) {
     return transactionPrinter.printLines(this.allTransactions(accountId));
   }
 

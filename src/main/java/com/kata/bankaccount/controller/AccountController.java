@@ -1,6 +1,7 @@
 package com.kata.bankaccount.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.security.auth.login.AccountException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class AccountController {
   }
 
   @GetMapping("/{accountId}/print")
-  public List<String> printStatement(@PathVariable long accountId) throws AccountException {
+  public LinkedList<String> printStatement(@PathVariable long accountId) throws AccountException {
     return accountService.printStatement(accountId);
   }
 

@@ -1,6 +1,7 @@
 package com.kata.bankaccount.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.security.auth.login.AccountException;
 import javax.transaction.Transactional;
@@ -71,7 +72,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public List<String> printStatement(long accountId) throws AccountException {
+  public LinkedList<String> printStatement(long accountId) throws AccountException {
     if (!accountRepo.existsById(accountId))
       throw new AccountException("Compte non trouvé!");
     return transactionService.printTransactions(accountId);

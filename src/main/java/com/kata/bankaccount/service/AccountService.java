@@ -1,6 +1,7 @@
 package com.kata.bankaccount.service;
 
 
+import java.util.LinkedList;
 import java.util.List;
 import javax.security.auth.login.AccountException;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,6 @@ public interface AccountService {
 
   void deleteById(long accountId) throws AccountException;
 
-  List<String> printStatement(long accountId) throws AccountException;
+  LinkedList<String> printStatement(long accountId) throws AccountException;
 
 }
