@@ -40,5 +40,5 @@ Try the app with docker at this url at this URL http://localhost:8080
 ```
 ### swagger2
 ```
-check controllers at this url URL http://localhost:8080/swagger-ui.html#/
+check controllers at this url URL http://localhost:8080/swagger-ui.html
 ```
