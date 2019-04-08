@@ -28,7 +28,13 @@ Ensuite il suffit d'indiquer le compte duquel on veut imprimer l'historique des 
 
 
 ## Run 
+### maven 
 ```
 git clone https://github.com/Azizus/MyBankAccount2.0.git
 mvn test
+```
+### docker
+```
+docker-compose up
+Try the app at this url at this URL http://localhost:8080
 ```
