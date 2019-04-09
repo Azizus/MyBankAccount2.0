@@ -5,8 +5,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import javax.security.auth.login.AccountException;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import com.kata.bankaccount.config.SpringBootIntegrationTest;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.domain.Transaction;
 import com.kata.bankaccount.repository.AccountRepository;
@@ -16,7 +17,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class DepositSteps {
+@Import(SpringBootIntegrationTest.class)
+public class DepositSteps extends SpringBootIntegrationTest {
 
   @Autowired
   private AccountRepository accountRepo;
@@ -25,18 +27,14 @@ public class DepositSteps {
   @Autowired
   private TransactionService transactionService;
 
-  private Account account = Account.builder().accountId(1).balance(0).build();
-
   private long accountId;
   private int amount;
 
-  @Before
-  public void init() {
-    account = accountRepo.save(account);
-  }
+  private Account account = Account.builder().accountId(1).balance(0).build();
 
   @Given("the ID of the Account")
   public void the_ID_of_the_Account() {
+    account = accountService.save(account);
     accountId = account.getAccountId();
   }
 
@@ -48,13 +46,13 @@ public class DepositSteps {
   @When("account exists And it's successfully updated")
   public void account_exists_And_it_s_successfully_updated() throws AccountException {
 
-    if (accountRepo.existsById(accountId))
-      accountService.depositInAccount(accountId, amount);
+    accountRepo.findById(accountId);
 
   }
 
   @Then("create and save a deposit transaction")
   public void create_and_save_a_deposit_transaction() throws AccountException {
+
     Transaction transaction = transactionService.deposit(accountId, amount);
 
     assertThat(transactionService.allTransactions(accountId)).hasSize(1);

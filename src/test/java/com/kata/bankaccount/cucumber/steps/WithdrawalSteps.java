@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import javax.security.auth.login.AccountException;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.domain.Transaction;
@@ -26,18 +25,13 @@ public class WithdrawalSteps {
   @Autowired
   private TransactionService transactionService;
 
-  private Account account = Account.builder().accountId(1).balance(100).build();
   private long accountId;
   private int amount;
 
-  @Before
-  public void init() {
-    account = accountRepo.save(account);
-  }
 
   @Given("the ID of the account")
   public void the_ID_of_the_account() {
-    accountId = account.getAccountId();
+    accountId = 1L;
   }
 
   @Given("the amount to withdraw")
@@ -45,15 +39,16 @@ public class WithdrawalSteps {
     amount = 50;
   }
 
-  @When("balance is sufficient")
-  public void balance_is_sufficient() {
-    account.hasBalanceAbove(amount);
+  @When("the account exists")
+  public void theAccountExists() throws AccountException {
+    accountRepo.findById(accountId);
   }
 
-  @When("the account exists And it's successfully updated")
-  public void the_account_exists_And_it_s_successfully_updated()
-      throws AccountException, TransactionException {
-    accountService.withdrawFromAccount(accountId, amount);
+  @When("balance is sufficient")
+  public void balanceIsSufficient() throws AccountException {
+
+    Account account = accountService.findByAccountId(accountId);
+    account.hasBalanceAbove(amount);
   }
 
   @Then("create and save a withdrawal transaction")
@@ -62,7 +57,7 @@ public class WithdrawalSteps {
 
     Transaction transaction = transactionService.withdraw(accountId, amount);
 
-    assertThat(transactionService.allTransactions(accountId)).hasSize(1);
+    assertThat(transactionService.allTransactions(accountId)).hasSize(2);
     assertThat(transaction.getAccountId(), is(equalTo(accountId)));
   }
 

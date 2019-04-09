@@ -6,6 +6,6 @@ Feature: Withdrawal Feature
   Scenario: withdraw money from my account 
     Given the ID of the account
     And the amount to withdraw
-    When balance is sufficient
-    And the account exists And it's successfully updated
+    When the account exists
+    And balance is sufficient
     Then create and save a withdrawal transaction

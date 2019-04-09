@@ -6,5 +6,5 @@ Feature: Deposit Feature
   Scenario: deposit money in bank account 
     Given the ID of the Account
     And the amount of deposit
-    When account exists And it's successfully updated
+    When account exists
     Then create and save a deposit transaction

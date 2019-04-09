@@ -10,7 +10,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
   public Transaction save(Transaction transaction);
 
-  // @Query(value = "SELECT * FROM Transaction WHERE accountId = ?0")
   public List<Transaction> findAllByAccountId(long accountId);
 
 }
