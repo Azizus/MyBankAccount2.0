@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import javax.security.auth.login.AccountException;
+import org.junit.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import com.kata.bankaccount.config.SpringBootIntegrationTest;
@@ -18,6 +19,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 @Import(SpringBootIntegrationTest.class)
+@Ignore
 public class DepositSteps extends SpringBootIntegrationTest {
 
   @Autowired
