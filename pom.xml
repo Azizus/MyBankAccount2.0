@@ -158,15 +158,15 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.4.1</version>
-				<configuration>
-					<propertyFile>src/main/resources/application.properties</propertyFile>
-					<changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile>
-				</configuration>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.liquibase</groupId> -->
+<!-- 				<artifactId>liquibase-maven-plugin</artifactId> -->
+<!-- 				<version>3.4.1</version> -->
+<!-- 				<configuration> -->
+<!-- 					<propertyFile>src/main/resources/application.properties</propertyFile> -->
+<!-- 					<changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 </project>

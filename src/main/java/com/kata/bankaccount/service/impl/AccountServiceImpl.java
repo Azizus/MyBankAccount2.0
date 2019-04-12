@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public Account findByAccountId(long accountId) throws AccountException {
-    Account account = accountRepo.findByAccountId(accountId);
+    Account account = accountRepo.findById(accountId).get();
     if (account == null)
       throw new AccountException("Compte non trouve!");
     return account;
@@ -74,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public LinkedList<String> printStatement(long accountId) throws AccountException {
     if (!accountRepo.existsById(accountId))
-      throw new AccountException("Compte non trouvé!");
+      throw new AccountException("Compte non trouvï¿½!");
     return transactionService.printTransactions(accountId);
   }
 
