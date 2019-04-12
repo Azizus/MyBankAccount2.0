@@ -36,7 +36,7 @@ public class AccountServiceTest {
     int balance = 0;
     Account account = Account.builder().accountId(accountId).balance(balance).build();
 
-    when(accountRepo.findByAccountId(account.getAccountId())).thenReturn(account);
+    when(accountRepo.findById(account.getAccountId()).get()).thenReturn(account);
 
     accountService.depositInAccount(accountId, amount);
 
@@ -52,7 +52,7 @@ public class AccountServiceTest {
     int balance = 30;
     Account account = Account.builder().accountId(accountId).balance(balance).build();
 
-    when(accountRepo.findByAccountId(account.getAccountId())).thenReturn(account);
+    when(accountRepo.findById(account.getAccountId()).get()).thenReturn(account);
 
     accountService.withdrawFromAccount(accountId, amount);
 
@@ -68,7 +68,7 @@ public class AccountServiceTest {
     int balance = 50;
     Account account = Account.builder().accountId(accountId).balance(balance).build();
 
-    given(accountRepo.findByAccountId(account.getAccountId())).willReturn(account);
+    given(accountRepo.findById(account.getAccountId()).get()).willReturn(account);
 
     thrown.expect(TransactionException.class);
     thrown.expectMessage("Solde insuffisant!");
