@@ -43,6 +43,7 @@ public class DepositSteps extends SpringBootIntegrationTest {
   @Given("the amount of deposit")
   public void the_amount_of_deposit() {
     amount = 100;
+    
   }
 
   @When("account exists And it's successfully updated")
