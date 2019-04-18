@@ -49,7 +49,7 @@ public class WithdrawalSteps {
   @When("balance is sufficient")
   public void balanceIsSufficient() throws AccountException {
 
-    Account account = accountService.findByAccountId(accountId);
+    Account account = accountRepo.findById(accountId).get();
     account.hasBalanceAbove(amount);
   }
 

@@ -14,7 +14,7 @@ public interface AccountService {
   Account withdrawFromAccount(long accountId, int amount)
       throws TransactionException, AccountException;
 
-  Account findByAccountId(long accountId) throws AccountException;
+  Account findById(long accountId) throws AccountException;
 
   Account depositInAccount(long accountId, int amount) throws AccountException;
 

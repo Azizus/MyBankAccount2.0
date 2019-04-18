@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.dto.AccountDto;
 import com.kata.bankaccount.mapper.AccountMapper;
+import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.service.AccountService;
 
 @RestController
@@ -25,6 +26,8 @@ public class AccountController {
   private AccountService accountService;
   @Autowired
   private AccountMapper accountMapper;
+  @Autowired
+  private AccountRepository accountRepo;
 
 
   @PostMapping
@@ -41,7 +44,7 @@ public class AccountController {
 
   @GetMapping("/{accountId}")
   public AccountDto findById(@PathVariable long accountId) throws AccountException {
-    Account account = accountService.findByAccountId(accountId);
+    Account account = accountRepo.findById(accountId).orElse(null);
     return accountMapper.accountToAccountDto(account);
   }
 

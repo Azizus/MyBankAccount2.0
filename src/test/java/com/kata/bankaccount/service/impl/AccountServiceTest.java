@@ -1,8 +1,8 @@
 package com.kata.bankaccount.service.impl;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import java.util.Optional;
 import javax.security.auth.login.AccountException;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,19 +12,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.kata.bankaccount.MyBankAccountApplication;
 import com.kata.bankaccount.domain.Account;
 import com.kata.bankaccount.exceptions.TransactionException;
 import com.kata.bankaccount.repository.AccountRepository;
 import com.kata.bankaccount.service.AccountService;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MyBankAccountApplication.class)
 public class AccountServiceTest {
 
   @InjectMocks
   private AccountService accountService = new AccountServiceImpl();
   @Mock
   AccountRepository accountRepo;
+
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -36,7 +38,8 @@ public class AccountServiceTest {
     int balance = 0;
     Account account = Account.builder().accountId(accountId).balance(balance).build();
 
-    when(accountRepo.findById(account.getAccountId()).get()).thenReturn(account);
+    when(accountRepo.existsById(accountId)).thenReturn(true);
+    when(accountRepo.findById(accountId)).thenReturn(Optional.of(account));
 
     accountService.depositInAccount(accountId, amount);
 
@@ -52,7 +55,8 @@ public class AccountServiceTest {
     int balance = 30;
     Account account = Account.builder().accountId(accountId).balance(balance).build();
 
-    when(accountRepo.findById(account.getAccountId()).get()).thenReturn(account);
+    when(accountRepo.existsById(accountId)).thenReturn(true);
+    when(accountRepo.findById(accountId)).thenReturn(Optional.of(account));
 
     accountService.withdrawFromAccount(accountId, amount);
 
@@ -68,7 +72,8 @@ public class AccountServiceTest {
     int balance = 50;
     Account account = Account.builder().accountId(accountId).balance(balance).build();
 
-    given(accountRepo.findById(account.getAccountId()).get()).willReturn(account);
+    when(accountRepo.existsById(accountId)).thenReturn(true);
+    when(accountRepo.findById(accountId)).thenReturn(Optional.of(account));
 
     thrown.expect(TransactionException.class);
     thrown.expectMessage("Solde insuffisant!");
@@ -76,11 +81,13 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void should_thow_exception_when_account_not_found() throws AccountException {
-    Account account = new Account();
+  public void should_thow_exception_when_account_not_found()
+      throws AccountException, TransactionException {
+    Account account = Account.builder().accountId(0).build();
+
     thrown.expect(AccountException.class);
     thrown.expectMessage("Compte non trouve!");
-    accountService.findByAccountId(account.getAccountId());
+    accountService.findById(account.getAccountId());
   }
 
 }

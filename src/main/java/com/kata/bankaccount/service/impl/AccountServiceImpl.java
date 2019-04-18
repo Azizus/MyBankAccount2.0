@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Transactional
   public Account depositInAccount(long accountId, int amount) throws AccountException {
-    Account account = this.findByAccountId(accountId);
+    Account account = this.findById(accountId);
     int newBalance = account.getBalance() + amount;
     account.setBalance(newBalance);
     return accountRepo.save(account);
@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
   public Account withdrawFromAccount(long accountId, int amount)
       throws TransactionException, AccountException {
 
-    Account account = this.findByAccountId(accountId);
+    Account account = this.findById(accountId);
     if (account.hasBalanceAbove(amount))
       throw new TransactionException("Solde insuffisant!");
     int newBalance = account.getBalance() - amount;
@@ -43,11 +43,12 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Account findByAccountId(long accountId) throws AccountException {
-    Account account = accountRepo.findById(accountId).get();
-    if (account == null)
+  public Account findById(long accountId) throws AccountException {
+
+    if (!accountRepo.existsById(accountId)) {
       throw new AccountException("Compte non trouve!");
-    return account;
+    }
+    return accountRepo.findById(accountId).get();
   }
 
   @Override
