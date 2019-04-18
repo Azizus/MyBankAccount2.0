@@ -35,15 +35,15 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.liquibase</groupId> -->
-<!-- 			<artifactId>liquibase-core</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.liquibase</groupId> -->
-<!-- 			<artifactId>liquibase-maven-plugin</artifactId> -->
-<!-- 			<version>3.4.1</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.6.3</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
@@ -163,7 +163,7 @@
 				<version>3.4.1</version>
 				<configuration>
 					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
-<!-- 					<changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile> -->
+					<!-- <changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile> -->
 				</configuration>
 			</plugin>
 		</plugins>
